@@ -1,1 +1,1 @@
-# jm-front-md
+# jm-front

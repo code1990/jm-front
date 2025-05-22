@@ -1,9 +1,7 @@
 <template>
   <div class="MidBox">
     <div class="topBox">
-      <div class="timeBox">
-        {{ dayInfo }} {{ timeInfo }}
-      </div>
+      <TMap></TMap>
     </div>
     <div class="bottomBox">
       <div class="titleBox">
@@ -48,12 +46,12 @@
 <script>
 import { getStatCount } from "@/api/point/point";
 import {queryStation,queryLast } from "@/api/station/station";
-// import TMap from '@/views/data/TMap.vue'
+import TMap from '@/views/data/TMap.vue'
 export default {
   name: 'MidBox',
-  // components:{
-  //   TMap
-  // },
+  components:{
+    TMap
+  },
   data(){
     return{
       image1:require('../../assets/u0_13.gif'),
@@ -84,9 +82,6 @@ export default {
         status:null,
       },
       timer:null,
-      timer2:null,
-      timeInfo: '',
-      dayInfo: '',
     }
   },
   created() {
@@ -96,14 +91,11 @@ export default {
     if (this.timer) {
       clearInterval(this.timer)
     }
-    if (this.timer2) {
-      clearInterval(this.timer2)
-    }
   },
   mounted() {
     getStatCount().then(response => {
       this.obj = response.data;
-      console.log(response.data)
+      //console.log(response.data)
     });
     queryStation().then(response => {
       let array = response.data;
@@ -142,10 +134,6 @@ export default {
           });
         });
       }, 60000);
-      this.time2 =setInterval(()=>{
-        this.dayInfo = this.getDay()
-        this.timeInfo = this.getTime()
-      },1000);
     },
     changeStation(value){
       //console.log(value)
@@ -155,29 +143,6 @@ export default {
         let array = response.data;
         this.getDetailInfo(array);
       });
-    },
-    getDay() {
-      const now = new Date()
-      const year = now.getFullYear()
-      const month = ('0' + (now.getMonth() + 1)).slice(-2)
-      const day = ('0' + now.getDate()).slice(-2)
-      // const hours = ('0' + now.getHours()).slice(-2)
-      // const minutes = ('0' + now.getMinutes()).slice(-2)
-      // const seconds = ('0' + now.getSeconds()).slice(-2)
-
-      return year + '-' + month + '-' + day
-
-    },
-    getTime(){
-      const now = new Date()
-      // const year = now.getFullYear()
-      // const month = ('0' + (now.getMonth() + 1)).slice(-2)
-      // const day = ('0' + now.getDate()).slice(-2)
-      const hours = ('0' + now.getHours()).slice(-2)
-      const minutes = ('0' + now.getMinutes()).slice(-2)
-      const seconds = ('0' + now.getSeconds()).slice(-2)
-
-      return hours + ':' + minutes + ':' + seconds
     },
     getDetailInfo(array){
       for(let i=0;i<array.length;i++){
@@ -215,9 +180,6 @@ export default {
   width: 100%;
   height: 55%;
   float: left;
-  background-image: url("../../assets/mdz.png");
-  background-repeat:no-repeat;
-  background-size: 100% 100%;
 }
 
 .bottomBox{
@@ -353,13 +315,5 @@ export default {
   position: fixed;
   left: 55.9%;
   top: 27%;
-}
-.timeBox{
-  float: right;
-  color: white;
-  font-size: 16px;
-  margin-right: 12%;
-  margin-top: 0.5%;
-  background-color: #096EB0;
 }
 </style>

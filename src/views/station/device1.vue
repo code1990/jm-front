@@ -80,7 +80,7 @@ export default {
     return {
       title: '1号清污机',
       array:['运行','过载','限位','电源','远控'],
-      array3:[0,0,0,0,0],
+      array3:[0,0,0,0,1],
       actionText:'',
       minute:10,
       detailArray:[
@@ -149,10 +149,10 @@ export default {
         }
       });
 
-      // getStatus(deviceId).then(response => {
-      //   let obj = response.data;
-      //   this.setStatus(obj);
-      // });
+      getStatus(deviceId).then(response => {
+        let obj = response.data;
+        this.setStatus(obj);
+      });
     },
     getTime() {
       setInterval(() => {
@@ -208,6 +208,7 @@ export default {
         array[4] = parseInt(obj.v6)
       }
       this.array3.splice(0, this.array3.length, ...array);
+      this.array3[4]=1;
     },
     changeStatus(val){
       this.status = val;

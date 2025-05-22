@@ -793,13 +793,13 @@ export default {
       for(let i=0;i<array.length;i++) {
         let obj = array[i];
         let name = obj.deviceName;
-        if (name.indexOf('1号自排闸') !== -1) {
+        if (name.indexOf('1号工作闸') !== -1) {
           this.v1List[0] = obj;
           if (obj.status){
             this.status1 = parseInt(obj.status);
           }
         }
-        if (name.indexOf('2号自排闸') !== -1) {
+        if (name.indexOf('2号工作闸') !== -1) {
           this.v1List[1] = obj;
         }
         // if (name.indexOf('3号电机') !== -1) {

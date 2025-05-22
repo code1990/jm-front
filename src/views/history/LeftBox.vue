@@ -28,7 +28,7 @@
               :default-checked-keys="[1]"
               :props="defaultProps" style="margin-left: 20%;"></el-tree>
 <!--            <el-menu-item index="7-1"><router-link to="/water1"><div style="margin-left: 30px;font-size: 16px;">电排站运行记录</div></router-link></el-menu-item>-->
-<!--            <el-menu-item index="7-2"><router-link to="/water2"><div style="margin-left: 30px;font-size: 16px;">自排闸运行记录</div></router-link></el-menu-item>-->
+<!--            <el-menu-item index="7-2"><router-link to="/water2"><div style="margin-left: 30px;font-size: 16px;">工作闸运行记录</div></router-link></el-menu-item>-->
             <el-menu-item index="7-3"><router-link to="/alarm"><div style="margin-left: 30px;font-size: 16px;">故障预警</div></router-link></el-menu-item>
           </el-submenu>
         </el-menu>
@@ -108,33 +108,52 @@ export default {
               id: 9,
               label: '皮带机1'
             },
-            {
-              id: 10,
-              label: '皮带机2'
-            },
+            // {
+            //   id: 10,
+            //   label: '皮带机2'
+            // },
           ]
         }, {
           id: 11,
           label: '闸门运行记录',
           children: [{
             id: 12,
-            label: '1号自排闸'
+            label: '1号工作闸'
           }, {
             id: 13,
-            label: '2号自排闸'
+            label: '2号工作闸'
           }, {
             id: 14,
-            label: '3号自排闸'
+            label: '3号工作闸'
           }, {
             id: 15,
-            label: '4号自排闸'
+            label: '4号工作闸'
+          },
+            {
+              id: 16,
+              label: '5号工作闸'
+            }, {
+              id: 17,
+              label: '6号工作闸'
+            }, {
+              id: 18,
+              label: '7号工作闸'
+            }, {
+              id: 19,
+              label: '8号工作闸'
+            },{
+            id: 20,
+            label: '1号防洪闸'
           }, {
-            id: 16,
-            label: '左岸自排闸'
-          }, {
-            id: 17,
-            label: '右岸自排闸'
-          }]
+            id: 21,
+            label: '2号防洪闸'
+          },{
+              id: 20,
+              label: '3号防洪闸'
+            }, {
+              id: 21,
+              label: '4号防洪闸'
+            }]
         }],
         defaultProps: {
           children: 'children',

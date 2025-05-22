@@ -103,10 +103,10 @@ export default {
   data() {
     return {
       obj:{
-        v4:null,
-        v5:null,
-        v6:null,
-        v7:null,
+        v4:1,
+        v5:8,
+        v6:4,
+        v7:2,
       },
       image1:require('../../assets/u2_00.gif'),
       image2:require('../../assets/u2_01.gif'),
@@ -146,7 +146,7 @@ export default {
   },
   mounted() {
     getStatCount().then(response => {
-      this.obj = response.data;
+      // this.obj = response.data;
       //console.log(response.data)
     });
     queryStation().then(response => {

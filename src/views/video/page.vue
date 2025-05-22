@@ -15,7 +15,7 @@
       <div class="videoBox" style="padding-top: 0px;">
         <div class="tipBox">
           <div style="width: 3px;height: 20px;background-color: #1E7AD8;float: left;"></div>
-          <div style="margin-left: 15px;font-size: 20px;font-weight: bold;margin-top: -4px;">泵站视频</div>
+          <div style="margin-left: 15px;font-size: 20px;font-weight: bold;margin-top: -4px;">闸门视频</div>
         </div>
 
         <div  v-show="check1" style="width: 33%;float: left;">
@@ -50,7 +50,7 @@
           </div>
 
         </div>
-        <div class="controlBox" v-show="check1"><VideoControl :deviceSerial="deviceId1" @setValueName="setValueName"></VideoControl></div>
+        <div class="controlBox" v-show="check1"><VideoControl :deviceSerial="deviceId1" @setValueName="setValueName" v-if="false"></VideoControl></div>
         <div  v-show="check2" style="width: 33%;float: left;">
           <div class="searchInfo" style="width: 100%;height: 70px;padding: 20px 20px;">
             <div class="searchBox" style="background-color: white;width: 100%;border-bottom:1px solid #D6E7F7; ">
@@ -81,7 +81,7 @@
             <div class="videoTitle">{{ vTitle2 }}</div>
           </div>
         </div>
-        <div class="controlBox" v-show="check2"><VideoControl :deviceSerial="deviceId2" @setValueName="setValueName"></VideoControl></div>
+        <div class="controlBox" v-show="check2"><VideoControl :deviceSerial="deviceId2" @setValueName="setValueName" v-if="false"></VideoControl></div>
         <div  v-show="check3" style="width: 33%;float: left;">
           <div class="searchInfo" style="width: 100%;height: 70px;padding: 20px 20px;">
             <div class="searchBox" style="background-color: white;width: 100%;border-bottom:1px solid #D6E7F7; ">
@@ -113,18 +113,11 @@
 
           </div>
         </div>
-        <div class="controlBox" v-show="check3"><VideoControl :deviceSerial="deviceId3" @setValueName="setValueName"></VideoControl></div>
-      </div>
-
-      <div class="videoBox"  style="padding-top: 0px;" v-show="check10">
-        <div class="tipBox">
-          <div style="width: 3px;height: 20px;background-color: #1E7AD8;float: left;"></div>
-          <div style="margin-left: 15px;font-size: 20px;font-weight: bold;margin-top: -4px;">闸门视频</div>
-        </div>
+        <div class="controlBox" v-show="check3"><VideoControl :deviceSerial="deviceId3" @setValueName="setValueName" v-if="false"></VideoControl></div>
         <div  v-show="check4" style="width: 33%;float: left;">
           <div class="searchInfo" style="width: 100%;height: 70px;padding: 20px 20px;">
             <div class="searchBox" style="background-color: white;width: 100%;border-bottom:1px solid #D6E7F7; ">
-              <el-form :model="queryParams11" ref="queryForm" size="small" :inline="true" v-show="showSearch">
+              <el-form :model="queryParams4" ref="queryForm" size="small" :inline="true" v-show="showSearch">
                 <el-form-item label="" prop="repairTime"  style="">
                   <el-date-picker
                     v-model="vDate4"
@@ -140,8 +133,8 @@
           </div>
           <div class="videoDetail">
             <video
-              id="videoElement21"
-              ref="videoElement21"
+              id="videoElement14"
+              ref="videoElement14"
               controls
               muted
               poster="../../assets/video_conver.png"
@@ -151,11 +144,19 @@
             <div class="videoTitle">{{ vTitle4 }}</div>
           </div>
         </div>
-        <div class="controlBox" v-show="check4"><VideoControl :deviceSerial="deviceId4"></VideoControl></div>
+      </div>
+
+      <div class="videoBox"  style="padding-top: 0px;" v-show="check110">
+        <div class="tipBox">
+          <div style="width: 3px;height: 20px;background-color: #1E7AD8;float: left;"></div>
+          <div style="margin-left: 15px;font-size: 20px;font-weight: bold;margin-top: -4px;">泵站视频</div>
+        </div>
+
+<!--        <div class="controlBox" v-show="check4"><VideoControl :deviceSerial="deviceId4" v-if="false"></VideoControl></div>-->
         <div  v-show="check5" style="width: 33%;float: left;">
           <div class="searchInfo" style="width: 100%;height: 70px;padding: 20px 20px;">
             <div class="searchBox" style="background-color: white;width: 100%;border-bottom:1px solid #D6E7F7; ">
-              <el-form :model="queryParams12" ref="queryForm" size="small" :inline="true" v-show="showSearch">
+              <el-form :model="queryParams5" ref="queryForm" size="small" :inline="true" v-show="showSearch">
                 <el-form-item label="" prop="repairTime"  style="">
                   <el-date-picker
                     v-model="vDate5"
@@ -171,8 +172,8 @@
           </div>
           <div class="videoDetail">
             <video
-              id="videoElement22"
-              ref="videoElement22"
+              id="videoElement21"
+              ref="videoElement21"
               controls
               muted
               poster="../../assets/video_conver.png"
@@ -182,11 +183,11 @@
             <div class="videoTitle">{{ vTitle5 }}</div>
           </div>
         </div>
-        <div class="controlBox" v-show="check5"><VideoControl :deviceSerial="deviceId5"></VideoControl></div>
+        <div class="controlBox" v-show="check5"><VideoControl :deviceSerial="deviceId5" v-if="false"></VideoControl></div>
         <div  v-show="check6" style="width: 33%;float: left;">
           <div class="searchInfo" style="width: 100%;height: 70px;padding: 20px 20px;">
             <div class="searchBox" style="background-color: white;width: 100%;border-bottom:1px solid #D6E7F7; ">
-              <el-form :model="queryParams13" ref="queryForm" size="small" :inline="true" v-show="showSearch">
+              <el-form :model="queryParams6" ref="queryForm" size="small" :inline="true" v-show="showSearch">
                 <el-form-item label="" prop="repairTime"  style="">
                   <el-date-picker
                     v-model="vDate6"
@@ -202,8 +203,8 @@
           </div>
           <div class="videoDetail">
             <video
-              id="videoElement23"
-              ref="videoElement23"
+              id="videoElement22"
+              ref="videoElement22"
               controls
               muted
               poster="../../assets/video_conver.png"
@@ -213,17 +214,11 @@
             <div class="videoTitle">{{ vTitle6 }}</div>
           </div>
         </div>
-        <div class="controlBox" v-show="check6"><VideoControl :deviceSerial="deviceId6" @setValueName="setValueName"></VideoControl></div>
-      </div>
-      <div class="videoBox" v-show="check11" style="padding-top: 0px;">
-        <div class="tipBox">
-          <div style="width: 3px;height: 20px;background-color: #1E7AD8;float: left;"></div>
-          <div style="margin-left: 15px;font-size: 20px;font-weight: bold;margin-top: -4px;">枪机视频</div>
-        </div>
+        <div class="controlBox" v-show="check6"><VideoControl :deviceSerial="deviceId6" @setValueName="setValueName" v-if="false"></VideoControl></div>
         <div  v-show="check7" style="width: 33%;float: left;">
           <div class="searchInfo" style="width: 100%;height: 70px;padding: 20px 20px;">
-            <div class="searchBox" style="background-color: white;width: 100%;border-bottom:1px solid #D6E7F7; ">
-              <el-form :model="queryParams11" ref="queryForm" size="small" :inline="true" v-show="showSearch">
+            <div class="searchBox" style="background-color: white;width: 100%;border-bottom:1px solid #D8E7F7; ">
+              <el-form :model="queryParams7" ref="queryForm" size="small" :inline="true" v-show="showSearch">
                 <el-form-item label="" prop="repairTime"  style="">
                   <el-date-picker
                     v-model="vDate7"
@@ -231,8 +226,76 @@
                     range-separator="至"
                     value-format="yyyy-MM-dd HH:mm:ss"
                     start-placeholder="回放开始日期"
-                    end-placeholder="回放结束日期"  size="small"  @change="handleQuery2" style="width: 260px;margin-left: 20px;"></el-date-picker>
+                    end-placeholder="回放结束日期"  size="small"  @change="handleQuery2" style="width: 280px;margin-left: 20px;"></el-date-picker>
                   <el-button type="primary" icon="el-icon-search" size="mini" style="margin-left: 10px;" @click="handleQuery2(6)">查询</el-button>
+                </el-form-item>
+              </el-form>
+            </div>
+          </div>
+          <div class="videoDetail">
+            <video
+              id="videoElement23"
+              ref="videoElement23"
+              controls
+              muted
+              poster="../../assets/video_conver.png"
+              width="100%"
+              height="100%"
+            ></video>
+            <div class="videoTitle">{{ vTitle7 }}</div>
+          </div>
+        </div>
+        <div class="controlBox" v-show="check7"><VideoControl :deviceSerial="deviceId7" v-if="false"></VideoControl></div>
+        <div  v-show="check8" style="width: 33%;float: left;">
+          <div class="searchInfo" style="width: 100%;height: 70px;padding: 20px 20px;">
+            <div class="searchBox" style="background-color: white;width: 100%;border-bottom:1px solid #D8E7F7; ">
+              <el-form :model="queryParams8" ref="queryForm" size="small" :inline="true" v-show="showSearch">
+                <el-form-item label="" prop="repairTime"  style="">
+                  <el-date-picker
+                    v-model="vDate8"
+                    type="daterange"
+                    range-separator="至"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    start-placeholder="回放开始日期"
+                    end-placeholder="回放结束日期"  size="small"  @change="handleQuery2" style="width: 280px;margin-left: 20px;"></el-date-picker>
+                  <el-button type="primary" icon="el-icon-search" size="mini" style="margin-left: 10px;" @click="handleQuery2(7)">查询</el-button>
+                </el-form-item>
+              </el-form>
+            </div>
+          </div>
+          <div class="videoDetail">
+            <video
+              id="videoElement24"
+              ref="videoElement24"
+              controls
+              muted
+              poster="../../assets/video_conver.png"
+              width="100%"
+              height="100%"
+            ></video>
+            <div class="videoTitle">{{ vTitle8 }}</div>
+          </div>
+        </div>
+        <div class="controlBox" v-show="check8"><VideoControl :deviceSerial="deviceId8" @setValueName="setValueName" v-if="false"></VideoControl></div>
+      </div>
+      <div class="videoBox" v-show="check111" style="padding-top: 0px;">
+        <div class="tipBox">
+          <div style="width: 3px;height: 20px;background-color: #1E7AD8;float: left;"></div>
+          <div style="margin-left: 15px;font-size: 20px;font-weight: bold;margin-top: -4px;">枪机视频</div>
+        </div>
+        <div  v-show="check9" style="width: 33%;float: left;">
+          <div class="searchInfo" style="width: 100%;height: 70px;padding: 20px 20px;">
+            <div class="searchBox" style="background-color: white;width: 100%;border-bottom:1px solid #D6E7F7; ">
+              <el-form :model="queryParams9" ref="queryForm" size="small" :inline="true" v-show="showSearch">
+                <el-form-item label="" prop="repairTime"  style="">
+                  <el-date-picker
+                    v-model="vDate9"
+                    type="daterange"
+                    range-separator="至"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    start-placeholder="回放开始日期"
+                    end-placeholder="回放结束日期"  size="small"  @change="handleQuery2" style="width: 260px;margin-left: 20px;"></el-date-picker>
+                  <el-button type="primary" icon="el-icon-search" size="mini" style="margin-left: 10px;" @click="handleQuery2(8)">查询</el-button>
                 </el-form-item>
               </el-form>
             </div>
@@ -250,11 +313,11 @@
             <div class="videoTitle">{{ vTitle7 }}</div>
           </div>
         </div>
-        <div class="controlBox" v-show="false"><VideoControl :deviceSerial="deviceId7" @setValueName="setValueName"></VideoControl></div>
-        <div  v-show="check8" style="width: 33%;float: left;">
+        <div class="controlBox" v-show="false"><VideoControl :deviceSerial="deviceId7" @setValueName="setValueName" v-if="false"></VideoControl></div>
+        <div  v-show="check10" style="width: 33%;float: left;">
           <div class="searchInfo" style="width: 100%;height: 70px;padding: 20px 20px;">
             <div class="searchBox" style="background-color: white;width: 100%;border-bottom:1px solid #D6E7F7; ">
-              <el-form :model="queryParams12" ref="queryForm" size="small" :inline="true" v-show="showSearch">
+              <el-form :model="queryParams10" ref="queryForm" size="small" :inline="true" v-show="showSearch">
                 <el-form-item label="" prop="repairTime"  style="">
                   <el-date-picker
                     v-model="vDate8"
@@ -263,7 +326,7 @@
                     value-format="yyyy-MM-dd HH:mm:ss"
                     start-placeholder="回放开始日期"
                     end-placeholder="回放结束日期"  size="small"  @change="handleQuery2" style="width: 260px;margin-left: 20px;"></el-date-picker>
-                  <el-button type="primary" icon="el-icon-search" size="mini" style="margin-left: 10px;" @click="handleQuery2(7)">查询</el-button>
+                  <el-button type="primary" icon="el-icon-search" size="mini" style="margin-left: 10px;" @click="handleQuery2(9)">查询</el-button>
                 </el-form-item>
               </el-form>
             </div>
@@ -281,11 +344,11 @@
             <div class="videoTitle">{{ vTitle8 }}</div>
           </div>
         </div>
-        <div class="controlBox" v-show="false"><VideoControl :deviceSerial="deviceId8" @setValueName="setValueName"></VideoControl></div>
-        <div  v-show="check9" style="width: 33%;float: left;">
+        <div class="controlBox" v-show="false"><VideoControl :deviceSerial="deviceId8" @setValueName="setValueName" v-if="false"></VideoControl></div>
+        <div  v-show="check11" style="width: 33%;float: left;">
           <div class="searchInfo" style="width: 100%;height: 70px;padding: 20px 20px;">
             <div class="searchBox" style="background-color: white;width: 100%;border-bottom:1px solid #D6E7F7; ">
-              <el-form :model="queryParams13" ref="queryForm" size="small" :inline="true" v-show="showSearch">
+              <el-form :model="queryParams11" ref="queryForm" size="small" :inline="true" v-show="showSearch">
                 <el-form-item label="" prop="repairTime"  style="">
                   <el-date-picker
                     v-model="vDate9"
@@ -294,7 +357,7 @@
                     value-format="yyyy-MM-dd HH:mm:ss"
                     start-placeholder="回放开始日期"
                     end-placeholder="回放结束日期"  size="small"  @change="handleQuery2" style="width: 260px;margin-left: 20px;"></el-date-picker>
-                  <el-button type="primary" icon="el-icon-search" size="mini" style="margin-left: 10px;" @click="handleQuery2(8)">查询</el-button>
+                  <el-button type="primary" icon="el-icon-search" size="mini" style="margin-left: 10px;" @click="handleQuery2(10)">查询</el-button>
                 </el-form-item>
               </el-form>
             </div>
@@ -312,7 +375,7 @@
             <div class="videoTitle">{{ vTitle9 }}</div>
           </div>
         </div>
-        <div class="controlBox" v-show="false"><VideoControl :deviceSerial="deviceId9" @setValueName="setValueName"></VideoControl></div>
+        <div class="controlBox" v-show="false"><VideoControl :deviceSerial="deviceId9" @setValueName="setValueName" v-if="false"></VideoControl></div>
       </div>
     </div>
   </el-main>
@@ -339,6 +402,7 @@ export default {
       flvPlayer7:null,
       flvPlayer8:null,
       flvPlayer9:null,
+      flvPlayer10:null,
       flvPlayer11:null,
       flvPlayer21:null,
       flvPlayer31:null,
@@ -348,6 +412,8 @@ export default {
       flvPlayer71:null,
       flvPlayer81:null,
       flvPlayer91:null,
+      flvPlayer101:null,
+      flvPlayer111:null,
       deviceId1:null,
       deviceId2:null,
       deviceId3:null,
@@ -357,6 +423,8 @@ export default {
       deviceId7:null,
       deviceId8:null,
       deviceId9:null,
+      deviceId10:null,
+      deviceId11:null,
       vTitle1:null,
       vTitle2:null,
       vTitle3:null,
@@ -366,6 +434,8 @@ export default {
       vTitle7:null,
       vTitle8:null,
       vTitle9:null,
+      vTitle10:null,
+      vTitle11:null,
       vDate1:null,
       vDate2:null,
       vDate3:null,
@@ -375,6 +445,8 @@ export default {
       vDate7:null,
       vDate8:null,
       vDate9:null,
+      vDate10:null,
+      vDate11:null,
       options:[],
       showSearch:true,
       loading:false,
@@ -400,20 +472,13 @@ export default {
       check9:false,
       check10:false,
       check11:false,
+      check110:false,
+      check111:false,
       deviceIdList:[],
       count:0,
       count3:0,
       flvPlayer: null,
       queryParams1:{
-        pageNum: 1,
-        pageSize: 100,
-        siteId: null,
-        deviceId: null,
-        startTime:null,
-        endTime:null,
-        siteType:'1',
-      },
-      queryParams11:{
         pageNum: 1,
         pageSize: 100,
         siteId: null,
@@ -431,15 +496,6 @@ export default {
         endTime:null,
         siteType:'1',
       },
-      queryParams12:{
-        pageNum: 1,
-        pageSize: 100,
-        siteId: null,
-        deviceId: null,
-        startTime:null,
-        endTime:null,
-        siteType:'1',
-      },
       queryParams3:{
         pageNum: 1,
         pageSize: 100,
@@ -449,7 +505,7 @@ export default {
         endTime:null,
         siteType:'1',
       },
-      queryParams13:{
+      queryParams4:{
         pageNum: 1,
         pageSize: 100,
         siteId: null,
@@ -457,7 +513,70 @@ export default {
         startTime:null,
         endTime:null,
         siteType:'1',
-      }
+      },
+      queryParams5:{
+        pageNum: 1,
+        pageSize: 100,
+        siteId: null,
+        deviceId: null,
+        startTime:null,
+        endTime:null,
+        siteType:'1',
+      },
+      queryParams6:{
+        pageNum: 1,
+        pageSize: 100,
+        siteId: null,
+        deviceId: null,
+        startTime:null,
+        endTime:null,
+        siteType:'1',
+      },
+      queryParams7:{
+        pageNum: 1,
+        pageSize: 100,
+        siteId: null,
+        deviceId: null,
+        startTime:null,
+        endTime:null,
+        siteType:'1',
+      },
+      queryParams8:{
+        pageNum: 1,
+        pageSize: 100,
+        siteId: null,
+        deviceId: null,
+        startTime:null,
+        endTime:null,
+        siteType:'1',
+      },
+      queryParams9:{
+        pageNum: 1,
+        pageSize: 100,
+        siteId: null,
+        deviceId: null,
+        startTime:null,
+        endTime:null,
+        siteType:'1',
+      },
+      queryParams10:{
+        pageNum: 1,
+        pageSize: 100,
+        siteId: null,
+        deviceId: null,
+        startTime:null,
+        endTime:null,
+        siteType:'1',
+      },
+      queryParams11:{
+        pageNum: 1,
+        pageSize: 100,
+        siteId: null,
+        deviceId: null,
+        startTime:null,
+        endTime:null,
+        siteType:'1',
+      },
     }
   },
   mounted() {
@@ -479,12 +598,15 @@ export default {
       this.webrtcPlay(this.flvPlayer1,'videoElement11',array[0].url);
       this.webrtcPlay(this.flvPlayer2,'videoElement12',array[1].url);
       this.webrtcPlay(this.flvPlayer3,'videoElement13',array[2].url);
-      this.webrtcPlay(this.flvPlayer4,'videoElement21',array[3].url);
+      this.webrtcPlay(this.flvPlayer4,'videoElement14',array[3].url);
       this.webrtcPlay(this.flvPlayer5,'videoElement22',array[4].url);
       this.webrtcPlay(this.flvPlayer6,'videoElement23',array[5].url);
-      this.webrtcPlay(this.flvPlayer7,'videoElement31',array[6].url);
-      this.webrtcPlay(this.flvPlayer8,'videoElement32',array[7].url);
-      this.webrtcPlay(this.flvPlayer9,'videoElement33',array[8].url);
+      this.webrtcPlay(this.flvPlayer7,'videoElement23',array[6].url);
+      this.webrtcPlay(this.flvPlayer8,'videoElement24',array[7].url);
+      this.webrtcPlay(this.flvPlayer9,'videoElement31',array[8].url);
+      this.webrtcPlay(this.flvPlayer10,'videoElement32',array[9].url);
+      this.webrtcPlay(this.flvPlayer11,'videoElement33',array[10].url);
+
       this.deviceId1 = array[0].deviceId;
       this.deviceId2 = array[1].deviceId;
       this.deviceId3 = array[2].deviceId;
@@ -494,6 +616,9 @@ export default {
       this.deviceId7 = array[6].deviceId;
       this.deviceId8 = array[7].deviceId;
       this.deviceId9 = array[8].deviceId;
+      this.deviceId10 = array[9].deviceId;
+      this.deviceId11 = array[10].deviceId;
+
       this.vTitle1 = array[0].deviceName;
       this.vTitle2 = array[1].deviceName;
       this.vTitle3 = array[2].deviceName;
@@ -503,6 +628,9 @@ export default {
       this.vTitle7 = array[6].deviceName;
       this.vTitle8 = array[7].deviceName;
       this.vTitle9 = array[8].deviceName;
+      this.vTitle10 = array[9].deviceName;
+      this.vTitle11 = array[10].deviceName;
+
       this.deviceIdList.push(array[0].deviceId);
       this.deviceIdList.push(array[1].deviceId);
       this.deviceIdList.push(array[2].deviceId);
@@ -512,6 +640,8 @@ export default {
       this.deviceIdList.push(array[6].deviceId);
       this.deviceIdList.push(array[7].deviceId);
       this.deviceIdList.push(array[8].deviceId);
+      this.deviceIdList.push(array[9].deviceId);
+      this.deviceIdList.push(array[10].deviceId);
     });
   },
   methods:{
@@ -643,12 +773,30 @@ export default {
           v = v.replace("00:00:00","23:59:59");
           this.queryParams2.endTime=v;
         }
-      }else {
+      }else if (index === 8){
         if (this.vDate9){
           let v = this.vDate9[0]
           v = v.replace("00:00:00","00:00:01");
           this.queryParams2.startTime=v;
           v = this.vDate9[1];
+          v = v.replace("00:00:00","23:59:59");
+          this.queryParams2.endTime=v;
+        }
+      }else if (index === 9){
+        if (this.vDate10){
+          let v = this.vDate10[0]
+          v = v.replace("00:00:00","00:00:01");
+          this.queryParams2.startTime=v;
+          v = this.vDate10[1];
+          v = v.replace("00:00:00","23:59:59");
+          this.queryParams2.endTime=v;
+        }
+      }else if (index === 10){
+        if (this.vDate11){
+          let v = this.vDate11[0]
+          v = v.replace("00:00:00","00:00:01");
+          this.queryParams2.startTime=v;
+          v = this.vDate11[1];
           v = v.replace("00:00:00","23:59:59");
           this.queryParams2.endTime=v;
         }
@@ -663,29 +811,36 @@ export default {
             this.webrtcPlay(this.flvPlayer11,'videoElement11',data.url);
           }
           else if(index === 1){
-            this.webrtcPlay(this.flvPlayer21,'videoElement21',data.url);
+            this.webrtcPlay(this.flvPlayer21,'videoElement12',data.url);
           }
           else if(index === 2){
-            this.webrtcPlay(this.flvPlayer31,'videoElement31',data.url);
+            this.webrtcPlay(this.flvPlayer31,'videoElement13',data.url);
           }
           else if(index === 3){
-            this.webrtcPlay(this.flvPlayer41,'videoElement21',data.url);
+            this.webrtcPlay(this.flvPlayer41,'videoElement14',data.url);
           }
           else if(index === 4){
-            this.webrtcPlay(this.flvPlayer51,'videoElement22',data.url);
+            this.webrtcPlay(this.flvPlayer51,'videoElement21',data.url);
           }
           else if(index === 5){
-            this.webrtcPlay(this.flvPlayer61,'videoElement23',data.url);
+            this.webrtcPlay(this.flvPlayer61,'videoElement22',data.url);
           }
           else if(index === 6){
-            this.webrtcPlay(this.flvPlayer71,'videoElement31',data.url);
+            this.webrtcPlay(this.flvPlayer71,'videoElement23',data.url);
           }
           else if(index === 7){
-            this.webrtcPlay(this.flvPlayer81,'videoElement32',data.url);
+            this.webrtcPlay(this.flvPlayer81,'videoElement24',data.url);
           }
           else if(index === 8){
+            this.webrtcPlay(this.flvPlayer91,'videoElement31',data.url);
+          }
+          else if(index === 9){
+            this.webrtcPlay(this.flvPlayer91,'videoElement32',data.url);
+          }
+          else if(index === 10){
             this.webrtcPlay(this.flvPlayer91,'videoElement33',data.url);
           }
+
         });
       }
       // let id = this.queryParams2.deviceId;
@@ -733,6 +888,12 @@ export default {
       }else  if (key === "1_9"){
         this.check9 = true;
         this.count3++;
+      }else  if (key === "1_10"){
+        this.check10 = true;
+        this.count3++;
+      }else  if (key === "1_11"){
+        this.check11 = true;
+        this.count3++;
       }
       if (key === "0_1"){
         this.check1 = false;
@@ -742,7 +903,6 @@ export default {
         this.check3 = false;
       }else  if (key === "0_4"){
         this.check4 = false;
-        this.count--;
       }else  if (key === "0_5"){
         this.check5 = false;
         this.count--;
@@ -751,24 +911,30 @@ export default {
         this.count--;
       }else  if (key === "0_7"){
         this.check7 = false;
-        this.count3--;
+        this.count--;
       }else  if (key === "0_8"){
         this.check8 = false;
-        this.count3--;
+        this.count--;
       }else  if (key === "0_9"){
         this.check9 = false;
+        this.count3--;
+      }else  if (key === "0_10"){
+        this.check10 = false;
+        this.count3--;
+      }else  if (key === "0_11"){
+        this.check11 = false;
         this.count3--;
       }
       // console.log(this.count)
       if (this.count === 0){
-        this.check10 = false;
+        this.check110 = false;
       }else {
-        this.check10 = true;
+        this.check110 = true;
       }
       if (this.count3 === 0){
-        this.check11 = false;
+        this.check111 = false;
       }else {
-        this.check11 = true;
+        this.check111 = true;
       }
       //console.error(key)
     },

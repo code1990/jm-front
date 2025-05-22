@@ -87,7 +87,7 @@
               </div>
             </template>
             <el-menu-item index="7-1"><router-link to="/water1"><div style="margin-left: 30px;font-size: 16px;">电排站运行记录</div></router-link></el-menu-item>
-            <el-menu-item index="7-2"><router-link to="/water2"><div style="margin-left: 30px;font-size: 16px;">自排闸运行记录</div></router-link></el-menu-item>
+            <el-menu-item index="7-2"><router-link to="/water2"><div style="margin-left: 30px;font-size: 16px;">工作闸运行记录</div></router-link></el-menu-item>
             <el-menu-item index="7-3"><router-link to="/alarm"><div style="margin-left: 30px;font-size: 16px;">故障预警</div></router-link></el-menu-item>
           </el-submenu>
           <el-submenu index="10"  v-if="checked7">

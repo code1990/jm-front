@@ -272,20 +272,20 @@ export default {
       vTitle5:null,
       checkList: ["1","2","3","4","5"],
       gateList:[
-        {"name":"1号自排闸","value":"2d6d051613bb4762ac822b05f1a1337b"},
-        {"name":"2号自排闸","value":"893f70b39c2541d89f06edad12bcc863"},
-        {"name":"3号自排闸","value":"afb35f6927964c81a6751b863ae1998b"},
-        {"name":"4号自排闸","value":"14749b2c6ca74f56b29a507495ae68a3"},
-        {"name":"5号自排闸","value":"14749b2c6ca74f56b29a507495ae68a4"},
-        {"name":"6号自排闸","value":"14749b2c6ca74f56b29a507495ae68a5"},
-        {"name":"7号自排闸","value":"14749b2c6ca74f56b29a507495ae68a6"},
-        {"name":"8号自排闸","value":"14749b2c6ca74f56b29a507495ae68a7"},
+        {"name":"1号工作闸","value":"2d6d051613bb4762ac822b05f1a1337b"},
+        {"name":"2号工作闸","value":"893f70b39c2541d89f06edad12bcc863"},
+        {"name":"3号工作闸","value":"afb35f6927964c81a6751b863ae1998b"},
+        {"name":"4号工作闸","value":"14749b2c6ca74f56b29a507495ae68a3"},
+        {"name":"5号工作闸","value":"14749b2c6ca74f56b29a507495ae68a4"},
+        {"name":"6号工作闸","value":"14749b2c6ca74f56b29a507495ae68a5"},
+        {"name":"7号工作闸","value":"14749b2c6ca74f56b29a507495ae68a6"},
+        {"name":"8号工作闸","value":"14749b2c6ca74f56b29a507495ae68a7"},
         {"name":"1号防洪闸","value":"c5fcabe7e9104e14af6975fd8d8c2625"},
         {"name":"2号防洪闸","value":"c5fcabe7e9104e14af6975fd8d8c2626"},
         {"name":"3号防洪闸","value":"c5fcabe7e9104e14af6975fd8d8c2627"},
         {"name":"4号防洪闸","value":"c5fcabe7e9104e14af6975fd8d8c2628"},
-        {"name":"左岸自排闸","value":"1cdc8b7fb90b488099f2dca53dd1b268"},
-        {"name":"右岸自排闸","value":"c5fcabe7e9104e14af6975fd8d8c2624"},
+        // {"name":"左岸工作闸","value":"1cdc8b7fb90b488099f2dca53dd1b268"},
+        // {"name":"右岸工作闸","value":"c5fcabe7e9104e14af6975fd8d8c2624"},
       ],
       check0:0,
       showSearch: true,
@@ -433,10 +433,10 @@ export default {
     //this.webrtcPlay();
     getCameraList(this.id,"5").then(response => {
       let array = response.data;
-      // this.webrtcPlay(this.flvPlayer2,'videoElement11',array[0].url);
-      // this.webrtcPlay(this.flvPlayer3,'videoElement12',array[1].url);
-      // this.webrtcPlay(this.flvPlayer4,'videoElement21',array[2].url);
-      // this.webrtcPlay(this.flvPlayer5,'videoElement22',array[3].url);
+      this.webrtcPlay(this.flvPlayer2,'videoElement11',array[0].url);
+      this.webrtcPlay(this.flvPlayer3,'videoElement12',array[1].url);
+      this.webrtcPlay(this.flvPlayer4,'videoElement21',array[2].url);
+      this.webrtcPlay(this.flvPlayer5,'videoElement22',array[3].url);
       this.deviceId2 = array[0].deviceId;
       this.deviceId3 = array[1].deviceId;
       this.deviceId4 = array[2].deviceId;
@@ -664,17 +664,17 @@ export default {
         getCameraBack(this.queryParams2.deviceId,this.queryParams2.startTime,this.queryParams2.endTime).then(response=>{
           let data = response.data;
           console.error(data);
-          if (index === 0){
+          // if (index === 0){
             //this.show1=true;
             //回放的时间 还是当前时间 视频没有加水印
             this.webrtcPlay(this.flvPlayer21,'videoElement11',data.url);
-          }else if(index === 1){
+          // }else if(index === 1){
             this.webrtcPlay(this.flvPlayer31,'videoElement12',data.url);
-          }else if(index === 2){
+          // }else if(index === 2){
             this.webrtcPlay(this.flvPlayer41,'videoElement21',data.url);
-          }else{
+          // }else{
             this.webrtcPlay(this.flvPlayer51,'videoElement22',data.url);
-          }
+          // }
 
         });
       }
@@ -813,13 +813,13 @@ export default {
       for(let i=0;i<array.length;i++) {
         let obj = array[i];
         let name = obj.deviceName;
-        if (name.indexOf('1号自排闸') !== -1) {
+        if (name.indexOf('1号工作闸') !== -1) {
           this.v1List[0] = obj;
           if (obj.status){
             this.status1 = parseInt(obj.status);
           }
         }
-        if (name.indexOf('2号自排闸') !== -1) {
+        if (name.indexOf('2号工作闸') !== -1) {
           this.v1List[1] = obj;
         }
         // if (name.indexOf('3号电机') !== -1) {

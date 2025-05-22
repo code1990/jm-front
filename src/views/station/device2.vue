@@ -103,11 +103,11 @@ export default {
     deviceId(newVal, oldVal) {
       //console.log('imgPath changed from', oldVal, 'to', newVal);
       this.deviceId = newVal
-        if (newVal === '94e5e2e891a34cdd94be3e6e18e26377'){
+        // if (newVal === '94e5e2e891a34cdd94be3e6e18e26377'){
+        //   this.title = '皮带机1'
+        // }else{
           this.title = '皮带机1'
-        }else{
-          this.title = '皮带机2'
-        }
+        // }
       this.getInfo(this.deviceId);
     }
   },

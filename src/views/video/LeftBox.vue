@@ -14,7 +14,7 @@
           active-text-color="#298AED">
           <el-submenu index="9"   v-if="checked4">
             <template slot="title">
-              <div style="margin-left: 20px;font-weight: bold;font-size: 18px;">
+              <div style="font-weight: bold;font-size: 18px;">
                 <i class="el-icon-location"></i>
                 <span>视频总览</span>
               </div>
@@ -27,7 +27,7 @@
               @check-change="checkNodeChange"
               :default-expanded-keys="[0, 10]"
               :default-checked-keys="checkArray"
-              :props="defaultProps" style="margin-left: 20%;"></el-tree>
+              :props="defaultProps" style="margin-left: 5%;"></el-tree>
 <!--            <el-menu-item index="9-1">-->
 <!--              <div style="margin-left: 30px;font-size: 16px;">闸门视频</div>-->
 <!--            </el-menu-item>-->
@@ -69,10 +69,12 @@ export default {
         checked7:true,
         checked8:true,
         checked9:true,
+        checked10:true,
+        checked11:true,
         opened:[],
         checkArray:[1],
-        stationList:[{name:'西村站'},{name:'马梪站'}],
-        gateList:[{name:'西村站'},{name:'马梪站'}],
+        stationList:[{name:'马梪站'}],
+        gateList:[{name:'马梪站'}],
         treeData: [ {
           id: 0,
           label: '泵站视频',

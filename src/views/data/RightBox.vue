@@ -62,10 +62,10 @@ export default {
       img3:require('../../assets/u01_12.gif'),
       img4:require('../../assets/u01_13.gif'),
       obj:{
-        v4:null,
-        v5:null,
-        v6:null,
-        v7:null,
+        v4:1,
+        v5:8,
+        v6:4,
+        v7:2,
       },
       pointList:[],
       timer:null,
@@ -80,10 +80,10 @@ export default {
     }
   },
   mounted() {
-    getStatCount().then(response => {
-      this.obj = response.data;
+    // getStatCount().then(response => {
+    //   this.obj = response.data;
       //console.log(response.data)
-    });
+    // });
     getLast().then(response => {
       this.pointList = response.data;
     });

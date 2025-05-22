@@ -474,11 +474,12 @@ export default {
           "name": "皮带机1",
           "type": 3,
           "value": "94e5e2e891a34cdd94be3e6e18e26377"
-        }, {
-          "name": "皮带机2",
-          "type": 3,
-          "value": "f9fb417ff6d54ff79d3bdb2311cd9318"
         }
+        // , {
+        //   "name": "皮带机2",
+        //   "type": 3,
+        //   "value": "f9fb417ff6d54ff79d3bdb2311cd9318"
+        // }
       ],
       checkList: ["1","2","3","4","5"],
       flvPlayer: null,

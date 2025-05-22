@@ -45,7 +45,7 @@
       <div>
         <div class="optionBox">
           <div class="titleBar"></div>
-          <span class="titleBox">流量曲线图</span>
+          <span class="titleBox">雨量曲线图</span>
           <div style="float: left;margin-left:10px;">
             <div @click="query(1,1)" :class="cls3">月</div>
             <div  @click="query(1,2)"  :class="cls4">年</div>

@@ -16,7 +16,7 @@
         下限位
         <div class="circleBox" style="margin-left: 32%;background-color: #C0C0C0"></div>
       </div>
-      <div class="control gateInfo" :style="{backgroundColor:isAction===1?'#00FF00':'#FF0000'}">{{ actionText }}</div>
+      <div class="control gateInfo" :style="{backgroundColor:isAction==1?'#00FF00':'#C0C0C0'}">{{ actionText }}</div>
     </div>
     <div  class="rightBox">
       <div class="titleBox">{{ title }}</div>
@@ -24,7 +24,7 @@
         <div class="info" v-for="(item,index) in array" :key="index"  :style="{marginLeft:(index===0)?'13%':'0%'}">
           {{ item }}
           <div class="circleBox">
-            <div class="circleSon" :style="{backgroundColor:array3[index]===1?'#FF0000':'#C0C0C0'}"></div>
+            <div class="circleSon" :style="{backgroundColor:array3[index]===1?'#00FF00':'#C0C0C0'}"></div>
           </div>
         </div>
       </div>
@@ -49,9 +49,9 @@
         </div>
       </div>
       <div class="controlBox">
-        <div class="control" @click="changeStatus(1)" :style="{backgroundColor:(status===1)?'#00FF00':'#C0C0C0'}">上升</div>
-        <div class="control" @click="changeStatus(2)" :style="{backgroundColor:(status===2)?'#00FF00':'#C0C0C0',marginLeft:'1%'}">下降</div>
-        <div class="control" @click="changeStatus(0)" :style="{backgroundColor:(status===0)?'#FF0000':'#C0C0C0',marginLeft:'1%'}" >停止</div>
+        <div class="control" @click="changeStatus(1)" :style="{backgroundColor:(status==1)?'#00FF00':'#C0C0C0'}">上升</div>
+        <div class="control" @click="changeStatus(2)" :style="{backgroundColor:(status==2)?'#00FF00':'#C0C0C0',marginLeft:'1%'}">下降</div>
+        <div class="control" @click="changeStatus(0)" :style="{backgroundColor:(status==0)?'#FF0000':'#C0C0C0',marginLeft:'1%'}" >停止</div>
       </div>
     </div>
   </div>
@@ -66,7 +66,7 @@ export default {
   },
   data() {
     return {
-      title: '1号自排闸',
+      title: '1号工作闸',
       array:['停止','故障','就地','远控'],
       array3:[0,0,0,0],
       dialogVisible:false,
@@ -101,21 +101,21 @@ export default {
       this.deviceId = newVal
       //console.error(newVal)
       if (newVal === '893f70b39c2541d89f06edad12bcc863'){
-        this.title = '2号自排闸';
+        this.title = '2号工作闸';
       } else if(newVal === 'afb35f6927964c81a6751b863ae1998b') {
-        this.title = '3号自排闸';
+        this.title = '3号工作闸';
       } else if(newVal === '14749b2c6ca74f56b29a507495ae68a3') {
-        this.title = '4号自排闸';
-      } else if(newVal === '1cdc8b7fb90b488099f2dca53dd1b268') {
-        this.title = '左岸自排闸';
-      }else if(newVal === '14749b2c6ca74f56b29a507495ae68a4') {
-        this.title = '5号自排闸';
+        this.title = '4号工作闸';
+      } /* else if(newVal === '1cdc8b7fb90b488099f2dca53dd1b268') {
+        this.title = '左岸工作闸';
+      } */else if(newVal === '14749b2c6ca74f56b29a507495ae68a4') {
+        this.title = '5号工作闸';
       }else if(newVal === '14749b2c6ca74f56b29a507495ae68a5') {
-        this.title = '6号自排闸';
+        this.title = '6号工作闸';
       }else if(newVal === '14749b2c6ca74f56b29a507495ae68a6') {
-        this.title = '7号自排闸';
+        this.title = '7号工作闸';
       }else if(newVal === '14749b2c6ca74f56b29a507495ae68a7') {
-        this.title = '8号自排闸';
+        this.title = '8号工作闸';
       }else if(newVal === 'c5fcabe7e9104e14af6975fd8d8c2625') {
         this.title = '1号防洪闸';
       }else if(newVal === 'c5fcabe7e9104e14af6975fd8d8c2626') {
@@ -124,10 +124,10 @@ export default {
         this.title = '3号防洪闸';
       }else if(newVal === 'c5fcabe7e9104e14af6975fd8d8c2628') {
         this.title = '4号防洪闸';
-      } else if(newVal === 'c5fcabe7e9104e14af6975fd8d8c2624') {
-        this.title = '右岸自排闸';
-      } else{
-        this.title = '1号自排闸';
+      } /* else if(newVal === 'c5fcabe7e9104e14af6975fd8d8c2624') {
+        this.title = '右岸工作闸';
+      } */ else{
+        this.title = '1号工作闸';
       }
       this.getInfo(this.deviceId);
     }
@@ -175,7 +175,7 @@ export default {
       this.detailArray.splice(0, this.detailArray.length, ...newArray);
     },
     setStatus(obj){
-      this.runTimeObj.day = obj.v13;
+      this.runTimeObj.day = parseInt(obj.v13);
       this.runTimeObj.hour = obj.v12;
       this.runTimeObj.minute = obj.v11;
       this.runTimeObj.seconds = obj.v10;
@@ -184,7 +184,7 @@ export default {
       // 故障
       // 就地
       // 远控
-      let array = [0,0,0,0];
+      let array = [0,0,0,1];
       if (obj.v1){
         array[0] = parseInt(obj.v1)
       }

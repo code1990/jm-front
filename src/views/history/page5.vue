@@ -68,22 +68,6 @@ export default {
       active:'7',
       showSearch: true,
       loading:false,
-      options: [{
-        value: '选项1',
-        label: '黄金糕'
-      }, {
-        value: '选项2',
-        label: '双皮奶'
-      }, {
-        value: '选项3',
-        label: '蚵仔煎'
-      }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
-      }],
       // value: '1',
       date:'',
       date1:'',
@@ -135,11 +119,12 @@ export default {
           "name": "皮带机1",
           "type": 3,
           "value": "94e5e2e891a34cdd94be3e6e18e26377"
-        }, {
+        }
+        /* , {
           "name": "皮带机2",
           "type": 3,
           "value": "f9fb417ff6d54ff79d3bdb2311cd9318"
-        }
+        } */
       ],
       checkList: ["1","2","3","4","5"],
       queryParams1: {

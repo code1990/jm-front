@@ -128,6 +128,12 @@ export default {
       });
       this.map.addOverLay(this.polygonLayer)
       this.map.addOverLay(bd)
+      this.map.addEventListener("click", function (e) {
+        var lng = e.lnglat.getLng();
+        var lat = e.lnglat.getLat();
+        // 打印到控制台
+        console.log("点击坐标：经度 =", lng, "纬度 =", lat);
+      })
     },
     // getBound(styleOption){
     //   let that = this;
@@ -232,11 +238,12 @@ export default {
           `<div style="padding:5px 5px;"><span style="width:100px;text-align:right;white-space: nowrap;color:#333333;font-size:14px;font-family:PingFang SC-Medium,PingFang SC;line-height: 24px;">村庄数量：</span><span style="line-height: 24px;font-size:14px">${item.v8} <span></div>`+
           `<div style="padding:5px 5px;"><span style="width:100px;text-align:right;white-space: nowrap;color:#333333;font-size:14px;font-family:PingFang SC-Medium,PingFang SC;line-height: 24px;">经度：</span><span style="line-height: 24px;font-size:14px">${item.longitude}  <span></div>`+
           `<div style="padding:5px 5px;"><span style="width:100px;text-align:right;white-space: nowrap;color:#333333;font-size:14px;font-family:PingFang SC-Medium,PingFang SC;line-height: 24px;">纬度：</span><span style="line-height: 24px;font-size:14px">${item.latitude} <span></div>`+
-          `<div style="padding:5px 5px;"><span style="width:100px;text-align:right;white-space: nowrap;color:#333333;font-size:14px;font-family:PingFang SC-Medium,PingFang SC;line-height: 24px;">编号：</span><span style="line-height: 24px;font-size:14px">${item.id} <span></div>`+
+          `<div style="padding:5px 5px;"><span style="width:100px;text-align:right;white-space: nowrap;color:#333333;font-size:14px;font-family:PingFang SC-Medium,PingFang SC;line-height: 24px;">站点：</span><span style="line-height: 24px;font-size:14px">${item.siteName} <span></div>`+
           `<div style="padding:5px 5px;"><span style="width:100px;text-align:right;white-space: nowrap;color:#333333;font-size:14px;font-family:PingFang SC-Medium,PingFang SC;line-height: 24px;">采集时间：</span><span style="line-height: 24px;font-size:14px">${item.collectTime} <span></div>`;
         let markerInfoWin = new T.InfoWindow(winHtml, { autoPan: true });
         //const that = this;
-        marker.addEventListener('click', () => {
+        marker.addEventListener('click',  ()=>{
+
           //
           marker.openInfoWindow(markerInfoWin);
           that.isShowMarkerInfo = true;

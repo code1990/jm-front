@@ -281,7 +281,7 @@
       <div class="videoBox" v-show="check111" style="padding-top: 0px;">
         <div class="tipBox">
           <div style="width: 3px;height: 20px;background-color: #1E7AD8;float: left;"></div>
-          <div style="margin-left: 15px;font-size: 20px;font-weight: bold;margin-top: -4px;">枪机视频</div>
+          <div style="margin-left: 15px;font-size: 20px;font-weight: bold;margin-top: -4px;">球机视频</div>
         </div>
         <div  v-show="check9" style="width: 33%;float: left;">
           <div class="searchInfo" style="width: 100%;height: 70px;padding: 20px 20px;">
@@ -599,8 +599,8 @@ export default {
       this.webrtcPlay(this.flvPlayer2,'videoElement12',array[1].url);
       this.webrtcPlay(this.flvPlayer3,'videoElement13',array[2].url);
       this.webrtcPlay(this.flvPlayer4,'videoElement14',array[3].url);
-      this.webrtcPlay(this.flvPlayer5,'videoElement22',array[4].url);
-      this.webrtcPlay(this.flvPlayer6,'videoElement23',array[5].url);
+      this.webrtcPlay(this.flvPlayer5,'videoElement21',array[4].url);
+      this.webrtcPlay(this.flvPlayer6,'videoElement22',array[5].url);
       this.webrtcPlay(this.flvPlayer7,'videoElement23',array[6].url);
       this.webrtcPlay(this.flvPlayer8,'videoElement24',array[7].url);
       this.webrtcPlay(this.flvPlayer9,'videoElement31',array[8].url);
@@ -872,7 +872,6 @@ export default {
         this.check3 = true;
       }else  if (key === "1_4"){
         this.check4 = true;
-        this.count++;
       }else  if (key === "1_5"){
         this.check5 = true;
         this.count++;
@@ -881,10 +880,10 @@ export default {
         this.count++;
       }else  if (key === "1_7"){
         this.check7 = true;
-        this.count3++;
+        this.count++;
       }else  if (key === "1_8"){
         this.check8 = true;
-        this.count3++;
+        this.count++;
       }else  if (key === "1_9"){
         this.check9 = true;
         this.count3++;

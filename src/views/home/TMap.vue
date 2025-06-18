@@ -170,10 +170,10 @@ export default {
     //   })
     // },
     getLinesFromGeojson(featureCollection){
-      console.error("2222",featureCollection)
+      //console.error("2222",featureCollection)
       let lines=[];
       let geometries=featureCollection[0].geometry.coordinates;
-      console.error("3333",geometries)
+      //console.error("3333",geometries)
       let type=featureCollection[0].geometry.type;
       for(let i=0;i<geometries.length;i++){
         let geometry=geometries[i]
@@ -185,7 +185,7 @@ export default {
         }
         if(type==="MultiLineString"||type === "MultiPolygon"){
           let subLines=geometry
-          console.error("1111111",geometry);
+          //console.error("1111111",geometry);
           lines=lines.concat(subLines)
         }
       }
@@ -245,7 +245,8 @@ export default {
         marker.addEventListener('click',  ()=>{
 
           //
-          marker.openInfoWindow(markerInfoWin);
+          window.location.href = window.location.origin+"/data?t="+new Date().getTime();
+          //marker.openInfoWindow(markerInfoWin);
           that.isShowMarkerInfo = true;
           that.currentInfo = item;
           // that.fromParams.projectLocation = current.lonlat.replace(",","_");

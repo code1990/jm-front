@@ -53,6 +53,9 @@
         <div class="control" @click="changeStatus(2)" :style="{backgroundColor:(status==2)?'#00FF00':'#C0C0C0',marginLeft:'1%'}">下降</div>
         <div class="control" @click="changeStatus(0)" :style="{backgroundColor:(status==0)?'#FF0000':'#C0C0C0',marginLeft:'1%'}" >停止</div>
       </div>
+      <div class="elevator-shaft">
+        <div class="elevator" id="elevator" @transitionend="checkElevator">闸门</div>
+      </div>
     </div>
   </div>
 </template>
@@ -70,6 +73,9 @@ export default {
       array:['停止','故障','就地','远控'],
       array3:[0,0,0,0],
       dialogVisible:false,
+      isUp:false,
+      isMoving:false,
+      isStopped:false,
       detailArray:[
         {'type':'A相电压：','value':0.0,'unit':'V'},
         {'type':'B相电压：','value':0.0,'unit':'V'},
@@ -199,20 +205,54 @@ export default {
       }
       this.array3.splice(0, this.array3.length, ...array);
     },
+    checkElevator(){
+      if (!this.isStopped) {
+        this.isUp = !this.isUp;
+      }
+      this.isMoving = false;
+    },
     changeStatus(val){
       this.status = val;
       this.dialogVisible = true;
       if (val){
         if (val === 1){
           this.actionText='上升';
+          // console.error(this.isStopped)
+          // if (!this.isStopped){
+            const elevator = document.getElementById('elevator');
+            elevator.style.transition = 'transform 8s ease-in-out';
+            elevator.style.transform = 'translateY(-280px)';
+          // }
         }else {
           this.actionText='下降';
+          // console.error(this.isStopped)
+          // if (!this.isStopped){
+            const elevator = document.getElementById('elevator');
+            elevator.style.transition = 'transform 8s ease-in-out';
+            elevator.style.transform = 'translateY(0)';
+          // }
         }
         this.isAction=1;
       }else {
         this.actionText='停止';
         this.isAction=0;
+        //if (!this.isMoving) return; // 不在运动就不用停
+
+        // 立即停止动画，保持当前位置
+        const elevator = document.getElementById('elevator');
+        const style = window.getComputedStyle(elevator);
+        const matrix = new WebKitCSSMatrix(style.transform);
+        // console.error(style.transform)
+        const currentTranslateY = matrix.m42;
+        // console.error(currentTranslateY)
+
+        elevator.style.transition = 'none'; // 取消动画
+        elevator.style.transform = `translateY(${currentTranslateY}px)`;
+
+        this.isStopped = true;
+        this.isMoving = false;
       }
+      console.error(this.actionText)
       this.$confirm('此操作将'+this.actionText+'闸门, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -351,5 +391,39 @@ export default {
 .gateInfo{
   width: 100%;
   margin-top: 10%;
+}
+.elevator-shaft {
+  position: relative;
+  width: 100%;
+  height: 39vh;
+  border: 4px solid #555;
+  overflow: hidden;
+  background: #333;
+  margin-bottom: 20px;
+
+}
+
+.elevator {
+  position: absolute;
+  width: 100%;
+  height: 80px;
+  background: #0af;
+  bottom: 0;
+  transition: transform 8s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+}
+
+.btn {
+  margin: 5px;
+  padding: 10px 20px;
+  background: #08f;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
 }
 </style>

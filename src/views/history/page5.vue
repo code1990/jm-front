@@ -7,15 +7,15 @@
       <LeftBox @child-msg="getChildMsg" :active="active"></LeftBox>
     </el-aside>
     <el-main class="main">
-      <div  style="width: 100%; background-color: white; float: left;  border-radius: 5px; height: 89.4vh;"  v-loading="loading">
+      <div  style="width: 100%; background-color: white; float: left;  border-radius: 5px; "  v-loading="loading">
         <div class="tipBox">
           <div style="width: 3px;height: 20px;background-color: #1E7AD8;float: left;"></div>
           <div style="margin-left: 15px;font-size: 20px;font-weight: bold;margin-top: -4px;">泵站运行运行记录</div>
         </div>
 
-        <div class="searchBox" style="padding:20px 0px;background-color: white;width: 100%;height: 120px;border-bottom:1px solid #D6E7F7; ">
+        <div class="searchBox" style="padding:20px 0px;background-color: white;width: 100%;height: 60px;border-bottom:1px solid #D6E7F7; ">
           <el-form :model="queryParams1" ref="queryForm" size="small" :inline="true" v-show="showSearch">
-            <el-form-item label="监测要素" prop="deviceId"  style="margin-left: 20px;">
+            <el-form-item label="监测要素" prop="deviceId"  style="margin-left: 20px;" v-if="false">
               <el-checkbox-group v-model="checkList" @change="handleChange">
                 <el-checkbox label="1">耗能信息</el-checkbox>
                 <el-checkbox label="2">内河水位</el-checkbox>
@@ -24,7 +24,7 @@
                 <el-checkbox label="5">开启时间</el-checkbox>
               </el-checkbox-group>
             </el-form-item>
-            <el-form-item  prop="deviceId"  style="width: 600px;"></el-form-item>
+            <el-form-item  prop="deviceId"  style="width: 600px;" v-if="false"></el-form-item>
             <el-form-item label="监测时间" prop="repairTime"  style="margin-left: 20px;">
               <el-date-picker
                 v-model="date1"
@@ -40,13 +40,16 @@
             </el-form-item>
           </el-form>
         </div>
-        <div  style="height: 130vh;background-color: white;">
-          <div id="main1" v-show="check1" style="width: 100%;height: 200px;float: left;"></div>
-          <div id="main2" v-show="check2" style="width: 100%;height: 200px;float: left;"></div>
-          <div id="main3" v-show="check3" style="width: 100%;height: 200px;float: left;"></div>
-          <div id="main4" v-show="check4" style="width: 100%;height: 200px;float: left;"></div>
-          <div id="main5" v-show="check4" style="width: 100%;height: 200px;float: left;"></div>
-          <div id="main6" v-show="check5" style="width: 100%;height: 200px;float: left;"></div>
+        <div  style="background-color: white;">
+          <div id="main1" v-show="check1" style="width: 48%;height: 200px;float: left;"></div>
+          <div id="main2" v-show="check2" style="width: 48%;height: 200px;float: left;"></div>
+          <div id="main3" v-show="check3" style="width: 48%;height: 200px;float: left;"></div>
+          <div id="main4" v-show="check4" style="width: 48%;height: 200px;float: left;"></div>
+          <div id="main5" v-show="check5" style="width: 48%;height: 200px;float: left;"></div>
+          <div id="main6" v-show="check6" style="width: 48%;height: 200px;float: left;"></div>
+          <div id="main7" v-show="check7" style="width: 48%;height: 200px;float: left;"></div>
+          <div id="main8" v-show="check8" style="width: 48%;height: 200px;float: left;"></div>
+          <div id="main9" v-show="check9" style="width: 48%;height: 200px;float: left;"></div>
         </div>
       </div>
 
@@ -76,6 +79,10 @@ export default {
       check3:true,
       check4:true,
       check5:true,
+      check6:true,
+      check7:true,
+      check8:true,
+      check9:true,
       rainList:[],
       queryParams: {
         type: 1,
@@ -151,7 +158,7 @@ export default {
     //   }
     // });
     this.queryParams1.deviceId= '3f79a090a42c4eb4a1779892a46fc5ca';
-    this.handleQuery1();
+    this.handleQuery1(1);
     // query1({  }).then(response => {
     //   //console.log(response)
     //   this.rainList =response.data;
@@ -165,22 +172,27 @@ export default {
   },
   methods:{
     getChildMsg(val){
+      if (!val || this.stationList[val-1].value === undefined) {
+        return;
+      }
       this.queryParams1.deviceId = this.stationList[val-1].value;
-      console.error(this.queryParams1.deviceId)
-      this.handleQuery1();
+      // console.error(this.queryParams1.deviceId)
+      this.handleQuery1(val);
       // console.error(val);
     },
-    drawRightChart(obj){
-      this.drawChart(obj.data,obj.date);
-      this.drawChart2('main2','内河水位','内河水位(mm)',obj.data[4],obj.date,'#96D379');
-      this.drawChart2('main3','外河水位','外河水位(mm)',obj.data[5],obj.date,'#FBCF5A');
-      this.drawChart2('main4','雨量信息','瞬时雨量(mm)',obj.data[6],obj.date,'#5674CD');
-      this.drawChart2('main5','累计雨量','累计雨量(mm)',obj.data[7],obj.date,'#E62100');
-      this.drawChart2('main6','开启时间','开启时间(小时)',obj.data[3],obj.date,'#3FCFF7');
+    drawRightChart(val,obj){
+      let id = 'main'+val;
+      let title = this.stationList[val-1].name;
+      this.drawChart(id,title,obj.data,obj.date);
+      // this.drawChart2('main2','内河水位','内河水位(mm)',obj.data[4],obj.date,'#96D379');
+      // this.drawChart2('main3','外河水位','外河水位(mm)',obj.data[5],obj.date,'#FBCF5A');
+      // this.drawChart2('main4','雨量信息','瞬时雨量(mm)',obj.data[6],obj.date,'#5674CD');
+      // this.drawChart2('main5','累计雨量','累计雨量(mm)',obj.data[7],obj.date,'#E62100');
+      // this.drawChart2('main6','开启时间','开启时间(小时)',obj.data[3],obj.date,'#3FCFF7');
     },
     handleChange(val){
       let array =val;
-      for (let i = 1; i < 6; i++) {
+      for (let i = 1; i < 10; i++) {
         let flag = false;
         if (array.indexOf(''+i) !== -1){
           flag = true;
@@ -200,6 +212,18 @@ export default {
         if (i === 5){
           this.check5 = flag;
         }
+        if (i === 6){
+          this.check6 = flag;
+        }
+        if (i === 7){
+          this.check7 = flag;
+        }
+        if (i === 8){
+          this.check8 = flag;
+        }
+        if (i === 9){
+          this.check9 = flag;
+        }
       }
       // for(let i=0;i<array.length;i++){
       //   let v = parseInt(array[i]);
@@ -207,7 +231,7 @@ export default {
       // }
       //console.log(val)
     },
-    handleQuery1(){
+    handleQuery1(val){
       this.loading = true;
       if (this.date1){
         let v = this.date1[0]
@@ -220,7 +244,7 @@ export default {
       //console.error(this.queryParams1)
       getSiteDay(this.queryParams1).then(response => {
         let obj = response.data;
-        this.drawRightChart(obj);
+        this.drawRightChart(val,obj);
       });
       this.loading = false;
     },
@@ -279,20 +303,26 @@ export default {
         this.loading = false;
       });
     },
-    drawChart(array,date){
-      var chartDom = document.getElementById('main1');
+    drawChart(id,title,array,date){
+      var chartDom = document.getElementById(id);
       var myChart = echarts.init(chartDom);
       var option;
 
       option = {
         title: {
-          text: ''
+          text: title,
+          left: '18%', // 水平居中（相对容器宽度）
+          top: '1%',  // 距离顶部10%位置
+          textStyle: {
+            fontSize: 12,
+            color: '#333'
+          }
         },
         tooltip: {
           trigger: 'axis'
         },
         legend: {
-          data: ['电流', '电压', '总功率']
+          data: ['电流', '电压', '总功率', '运行时长']
         },
         grid: {
           left: '3%',
@@ -310,26 +340,32 @@ export default {
         },
         yAxis: {
           type: 'value',
-          name:'耗能(a/v/kwh)',
+          name:'耗能(a/v/kwh/h)',
         },
         series: [
           {
             name: '电流',
             type: 'line',
             stack: 'Total',
-            data: array[1]
+            data: array[0]
           },
           {
             name: '电压',
             type: 'line',
             stack: 'Total',
-            data: array[0]
+            data: array[1]
           },
           {
             name: '总功率',
             type: 'line',
             stack: 'Total',
             data: array[2]
+          },
+          {
+            name: '运行时长',
+            type: 'line',
+            stack: 'Total',
+            data: array[3]
           },
         ]
       };

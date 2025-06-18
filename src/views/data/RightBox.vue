@@ -10,39 +10,64 @@
       <div style="float: left;width: 100%;height: 100%;">
         <div class="infoBox1">
           <img :src="img1" class="imgTip">
-          <el-col :span="20" class="tip1">管辖区域(km2)</el-col>
-          <el-col :span="12" class="tip2">{{obj.v4}}</el-col>
+          <el-col :span="18" class="tip1">管辖区域</el-col>
+          <el-col :span="12" class="tip2">{{obj.v4}}(km2)</el-col>
         </div>
         <div class="infoBox1">
           <img :src="img2" class="imgTip">
-          <el-col :span="20" class="tip1">泵站数量(个)</el-col>
-          <el-col :span="12" class="tip2">{{obj.v5}}</el-col>
+          <el-col :span="18" class="tip1">泵站数量</el-col>
+          <el-col :span="12" class="tip2">{{obj.v5}}(个)</el-col>
         </div>
         <div class="infoBox1">
           <img :src="img3" class="imgTip">
-          <el-col :span="20" class="tip1">拦河闸数量(个)</el-col>
-          <el-col :span="12" class="tip2">{{obj.v6}}</el-col>
+          <el-col :span="18" class="tip1">拦河闸数量</el-col>
+          <el-col :span="12" class="tip2">{{obj.v6}}(个)</el-col>
         </div>
         <div class="infoBox1">
           <img :src="img4" class="imgTip">
-          <el-col :span="20" class="tip1">测流点数量(个)</el-col>
-          <el-col :span="12" class="tip2">{{obj.v7}}</el-col>
+          <el-col :span="18" class="tip1">测流点数量</el-col>
+          <el-col :span="12" class="tip2">{{obj.v7}}(个)</el-col>
+        </div>
+        <div class="infoBox1">
+          <img :src="img5" class="imgTip">
+          <el-col :span="18" class="tip1">清污机数量</el-col>
+          <el-col :span="12" class="tip2">{{obj.v8}}(个)</el-col>
+        </div>
+        <div class="infoBox1">
+          <img :src="img6" class="imgTip">
+          <el-col :span="18" class="tip1">皮带机数量</el-col>
+          <el-col :span="12" class="tip2">{{obj.v9}}(个)</el-col>
         </div>
       </div>
     </div>
     <div class="bottomBox">
       <div class="titleBox">
         <img :src="image1" class="leftImage">
-        <div class="titleInfo">测流点实时信息</div>
+        <div class="titleInfo">泵站实时信息</div>
         <img :src="image2" class="rightImage">
         <div class="titleTip"></div>
       </div>
-      <div class="detailBox">
-        <div v-for="(item,index) in pointList" :key="index">
-          <el-col :span="24" class="detailInfo">
-            <div  class="siteInfo">{{ index+1 }}</div>  <span style="color: white;">{{ item.siteName }} </span>
-            <el-link type="success" style="float: right;opacity: 0.6;" @click="queryDetail(item)">查看详情</el-link>
-          </el-col>
+      <div  class="contentBox">
+        <div class="optionBox">
+          <el-radio-group v-model="index">
+            <el-radio :label="0" style="color: white;">泵1</el-radio>
+            <el-radio :label="1" style="color: white;" >泵2</el-radio>
+            <el-radio :label="2" style="color: white;" >泵3</el-radio>
+            <el-radio :label="3" style="color: white;" >泵4</el-radio>
+          </el-radio-group>
+        </div>
+        <div class="detailBox">
+          <el-col :span="12" style="padding: 12px 3px;"><div class="grid-content bg-purple">A相电压：{{v1List[index].v1}}V</div></el-col>
+          <el-col :span="12" style="padding: 12px 3px;"><div class="grid-content bg-purple">A相电流：{{v1List[index].a1}}A</div></el-col>
+
+          <el-col :span="12" style="padding: 12px 3px;"><div class="grid-content bg-purple">B相电压：{{v1List[index].v1}}V</div></el-col>
+          <el-col :span="12" style="padding: 12px 3px;"><div class="grid-content bg-purple">B相电流：{{v1List[index].a2}}A</div></el-col>
+
+          <el-col :span="12" style="padding: 12px 3px;"><div class="grid-content bg-purple">C相电压：{{v1List[index].v3}}V</div></el-col>
+          <el-col :span="12" style="padding: 12px 3px;"><div class="grid-content bg-purple">C相电流：{{v1List[index].a3}}A</div></el-col>
+          <el-col :span="12" style="padding: 12px 3px;"> <div class="grid-content bg-purple">瞬时流量：{{v1List[index].v8}}(m³/h)</div></el-col>
+          <el-col :span="12" style="padding: 12px 3px;"><div class="grid-content bg-purple">累计流量：{{v1List[index].v9}}m³</div></el-col>
+          <el-col :span="12" style="padding: 12px 3px;"><div class="grid-content bg-purple">总有功电能：{{v1List[index].kwh}}(kW/h)</div></el-col>
         </div>
       </div>
     </div>
@@ -51,6 +76,7 @@
 <script>
 import { getStatCount } from "@/api/point/point";
 import { getLast } from "@/api/point/point";
+import { queryLast, queryStation } from '@/api/station/station'
 export default {
   name: 'RightBox',
   data(){
@@ -61,14 +87,41 @@ export default {
       img2:require('../../assets/u01_05.gif'),
       img3:require('../../assets/u01_12.gif'),
       img4:require('../../assets/u01_13.gif'),
+      img5:require('../../assets/u_qwj.png'),
+      img6:require('../../assets/u_pdj.png'),
       obj:{
         v4:1,
-        v5:8,
-        v6:4,
+        v5:4,
+        v6:12,
         v7:2,
+        v8:4,
+        v9:1,
       },
       pointList:[],
+      index: 0,
+      options: [],
+      value1: '1',
+      siteId:null,
+      v1List:[{},{},{},{}],
+      url: require('../../assets/data_1.png'),
+      srcList: [
+        require('../../assets/data_1.png'),
+      ],
+      v3: {
+        a1:null,
+        a2:null,
+        a3:null,
+        v1:null,
+        v2:null,
+        v3:null,
+        kw:null,
+        kwh:null,
+        status:null,
+      },
       timer:null,
+      timer2:null,
+      timeInfo: '',
+      dayInfo: '',
     }
   },
   created() {
@@ -87,8 +140,64 @@ export default {
     getLast().then(response => {
       this.pointList = response.data;
     });
+    // queryStation().then(response => {
+    //   let array = response.data;
+    //   let siteId = array[0].id;
+    //   for(let i= 0;i<array.length;i++){
+    //     let obj = { value: array[i].id, label: array[i].name};
+    //     array[i]=obj;
+    //   }
+    //   this.siteId = siteId;
+    //   console.log(array)
+    //   this.options=array;
+    //   this.value1 = siteId;
+    //   queryLast(this.siteId+"").then(response => {
+    //     let array = response.data;
+    //     this.getDetailInfo(array);
+    //   });
+    // });
+
+    queryStation().then(response => {
+      let array = response.data;
+      let siteId = array[0].id;
+      for(let i= 0;i<array.length;i++){
+        let obj = { value: array[i].id, label: array[i].name};
+        array[i]=obj;
+      }
+      this.siteId = siteId;
+      // console.log(array)
+      this.options=array;
+      this.value1 = siteId;
+      queryLast(this.siteId+"").then(response => {
+        let array = response.data;
+        this.getDetailInfo(array);
+      });
+    });
   },
   methods:{
+    getDetailInfo(array){
+      for(let i=0;i<array.length;i++){
+        let obj = array[i];
+        let name = obj.deviceName;
+        if (name.indexOf('1号电机') !== -1){
+          //this.v1List[0] = obj;
+          this.$set(this.v1List, 0, obj);
+        }
+        if (name.indexOf('2号电机') !== -1){
+          //this.v1List[1] = obj;
+          this.$set(this.v1List, 1, obj);
+        }
+        if (name.indexOf('3号电机') !== -1){
+          //this.v1List[2] = obj;
+          this.$set(this.v1List, 2, obj);
+        }
+        if (name.indexOf('4号电机') !== -1){
+          //this.v1List[3] = obj;
+          this.$set(this.v1List, 3, obj);
+        }
+      }
+      this.index=0;
+    },
     getLastInfo(){
       this.timer = setInterval(() => {
         getLast().then(response => {
@@ -110,7 +219,7 @@ export default {
 
 <style scoped lang="scss">
 .rightBox{
-  width: 28%;
+  width: 22%;
   float: left;
   height: calc(100vh - 90px);
   background-image: url("../../assets/u0_033.gif");
@@ -141,7 +250,7 @@ export default {
   float: left;
   width: 30%;
   height: 50%;
-  margin-top:2%;
+  margin-top:3%;
   border:none;
   opacity: 0.5;
 }
@@ -149,7 +258,7 @@ export default {
   float: left;
   width: 30%;
   height: 50%;
-  margin-top:2%;
+  margin-top:3%;
   border:none;
   opacity: 0.5;
 }
@@ -158,7 +267,7 @@ export default {
   height: 100%;
   float: left;
   color:#27DBEC;
-  font-size: 20px;
+  font-size: 16px;
   text-align: center;
   line-height: 40px;
 }
@@ -178,14 +287,14 @@ export default {
   padding: 15px 15px;
   margin-left: 4%;
   margin-right: 2%;
-  margin-top: 10%;
+  margin-top: 1%;
   color: white;
 }
 .imgTip{
   margin-top: 10%;
   float: left;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
 }
 .tip1{
   float: right;
@@ -193,7 +302,7 @@ export default {
   margin-right: -23%;
 }
 .tip2{
-  font-size: 30px;
+  font-size: 16px;
   text-align: center;
   margin-top:2%;
 }
@@ -223,5 +332,33 @@ export default {
   overflow-y: auto;
   width: 100%;
   margin-top: 3%;
+}
+.chartBox{
+  height: 82%;
+  float: left;
+  overflow-y: auto;
+  width: 100%;
+  margin-top: 3%;
+  border: 1px solid #1B2048;
+}
+.contentBox{
+  width: 100%;
+  height: 83.5%;
+  float: left;
+  background-image: url("../../assets/u02_08.gif") ;
+  background-repeat:no-repeat;
+  background-size: 100% 100%;
+  margin-top: 2%;
+}
+.optionBox{
+  margin-top: 8%;
+  float: left;
+  margin-left: 10%;
+}
+.detailBox{
+  float: left;
+  color: white;
+  //margin-left: 8%;
+  //margin-top: 5%;
 }
 </style>

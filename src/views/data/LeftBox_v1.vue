@@ -13,103 +13,80 @@
     <div class="midBox">
       <div class="titleBox">
         <img :src="image1" class="leftImage">
-        <div class="titleInfo" style="font-size: 16px;">水位监测实时信息</div>
-        <img :src="image2" class="rightImage">
-        <el-button size="mini" @click="checkDate(1)" class="dateBox" v-if="false">请选择时间</el-button>
+        <div class="titleInfo">水位监测曲线图</div>
+        <el-button size="mini" @click="checkDate(1)" class="dateBox">请选择时间</el-button>
         <div class="titleTip"></div>
       </div>
-      <div style="height: 23vh;float: left;overflow-y: auto;width: 100%;margin-top: 10px;">
-        <vue-seamless-scroll :data="listData1" class="scroll-box" :class-option="option" :key="scrollKey">
-          <ul class="custom-list" style="margin-left: -20px;">
-            <li v-for="(item, index) in listData1" :key="index" style="color:white;">
-              <span class="date" v-text="item.date"></span>
-              <span class="title" v-text="item.title"></span>
-            </li>
-          </ul>
-        </vue-seamless-scroll>
+      <div style="float: right;z-index: 99">
+        <el-date-picker
+          v-if="showDate1"
+          :key="'dp1-' + datePickerKey1"
+          v-model="value1"
+          type="daterange"
+          align="right"
+          size="mini"
+          unlink-panels
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          value-format="yyyy-MM-dd"
+          :picker-options="pickerOptions"
+          @change="(val) => onDateChange(val, 1)"
+          @blur="showDate1=false"
+        >
+        </el-date-picker>
       </div>
-<!--      <div style="float: right;z-index: 99">-->
-<!--        <el-date-picker-->
-<!--          v-if="showDate1"-->
-<!--          :key="'dp1-' + datePickerKey1"-->
-<!--          v-model="value1"-->
-<!--          type="daterange"-->
-<!--          align="right"-->
-<!--          size="mini"-->
-<!--          unlink-panels-->
-<!--          range-separator="至"-->
-<!--          start-placeholder="开始日期"-->
-<!--          end-placeholder="结束日期"-->
-<!--          value-format="yyyy-MM-dd"-->
-<!--          :picker-options="pickerOptions"-->
-<!--          @change="(val) => onDateChange(val, 1)"-->
-<!--          @blur="showDate1=false"-->
-<!--        >-->
-<!--        </el-date-picker>-->
-<!--      </div>-->
-<!--      <div style="float: right;">-->
-<!--        <el-radio-group v-model="radio1" size="mini" @change="updateChart(1)" class="pink-radio-group">-->
-<!--          <el-radio-button label="1" >日</el-radio-button>-->
-<!--          <el-radio-button label="2" >月</el-radio-button>-->
-<!--          <el-radio-button label="3" >年</el-radio-button>-->
-<!--        </el-radio-group>-->
-<!--      </div>-->
-<!--      <div id="b" style="height:100px;width:98%;float: left;" ref="b1"></div>-->
-<!--      <div id="b2" style="height:100px;width:98%;float: left;" ref="b2"></div>-->
+      <div style="float: right;">
+        <el-radio-group v-model="radio1" size="mini" @change="updateChart(1)" class="pink-radio-group">
+          <el-radio-button label="1" >日</el-radio-button>
+          <el-radio-button label="2" >月</el-radio-button>
+          <el-radio-button label="3" >年</el-radio-button>
+        </el-radio-group>
+      </div>
+      <div id="b" style="height:100px;width:98%;float: left;" ref="b1"></div>
+      <div id="b2" style="height:100px;width:98%;float: left;" ref="b2"></div>
     </div>
     <div class="bottomBox">
       <div class="titleBox">
         <img :src="image1" class="leftImage">
-        <div class="titleInfo" style="font-size: 16px;">雨量监测实时信息</div>
-        <img :src="image2" class="rightImage">
-        <el-button size="mini" @click="checkDate(2)" class="dateBox" v-if="false">请选择时间</el-button>
+        <div class="titleInfo">雨量监测柱状图</div>
+        <el-button size="mini" @click="checkDate(2)" class="dateBox">请选择时间</el-button>
         <div class="titleTip"></div>
       </div>
-      <div style="height: 28vh;float: left;overflow-y: auto;width: 100%;margin-top: 10px;">
-        <vue-seamless-scroll :data="listData2" class="scroll-box" :class-option="option">
-          <ul class="custom-list" style="margin-left: -20px;">
-            <li v-for="(item, index) in listData2" :key="index" style="color:white;">
-              <span class="date" v-text="item.date"></span>
-              <span class="title" v-text="item.title"></span>
-            </li>
-          </ul>
-        </vue-seamless-scroll>
+      <div style="float: right;">
+        <el-date-picker
+          v-if="showDate2"
+          :key="'dp2-' + datePickerKey2"
+          v-model="value2"
+          type="daterange"
+          align="right"
+          size="mini"
+          unlink-panels
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          value-format="yyyy-MM-dd"
+          :picker-options="pickerOptions"
+          @change="(val) => onDateChange(val, 2)"
+          @blur="showDate2=false"
+        >
+        </el-date-picker>
       </div>
-<!--      <div style="float: right;">-->
-<!--        <el-date-picker-->
-<!--          v-if="showDate2"-->
-<!--          :key="'dp2-' + datePickerKey2"-->
-<!--          v-model="value2"-->
-<!--          type="daterange"-->
-<!--          align="right"-->
-<!--          size="mini"-->
-<!--          unlink-panels-->
-<!--          range-separator="至"-->
-<!--          start-placeholder="开始日期"-->
-<!--          end-placeholder="结束日期"-->
-<!--          value-format="yyyy-MM-dd"-->
-<!--          :picker-options="pickerOptions"-->
-<!--          @change="(val) => onDateChange(val, 2)"-->
-<!--          @blur="showDate2=false"-->
-<!--        >-->
-<!--        </el-date-picker>-->
-<!--      </div>-->
-<!--      <div style="float: right;">-->
-<!--        <el-radio-group v-model="radio2" size="mini" @change="updateChart(2)" class="pink-radio-group">-->
-<!--          <el-radio-button label="1" >日</el-radio-button>-->
-<!--          <el-radio-button label="2" >月</el-radio-button>-->
-<!--          <el-radio-button label="3" >年</el-radio-button>-->
-<!--        </el-radio-group>-->
-<!--      </div>-->
-<!--      <div id="c" style="height:100px;width:98%;float: left;" ref="c1"></div>-->
-<!--      <div id="c2" style="height:100px;width:98%;float: left;" ref="c2"></div>-->
+      <div style="float: right;">
+        <el-radio-group v-model="radio2" size="mini" @change="updateChart(2)" class="pink-radio-group">
+          <el-radio-button label="1" >日</el-radio-button>
+          <el-radio-button label="2" >月</el-radio-button>
+          <el-radio-button label="3" >年</el-radio-button>
+        </el-radio-group>
+      </div>
+      <div id="c" style="height:100px;width:98%;float: left;" ref="c1"></div>
+      <div id="c2" style="height:100px;width:98%;float: left;" ref="c2"></div>
     </div>
   </div>
 </template>
 <script>
-import { getDict, getList, getQuery2, getQuery4, getStatDetail } from '@/api/point/point'
+import { getDict,getQuery2,getQuery4,getStatDetail } from "@/api/point/point";
 import { getData } from '@/api/rain/rain'
-import vueSeamlessScroll from 'vue-seamless-scroll'
 export default {
   name: 'LeftBox',
   data(){
@@ -124,24 +101,11 @@ export default {
       showDate2:false,
       datePickerKey1: 0,
       datePickerKey2: 0,
-      scrollKey: 0,
       timer: null,
       value1: [],
       value2: [],
       options1:[],
       options2:[],
-      option: {
-        step: 0.5,         // 滚动速度，值越小越慢
-        limitMoveNum: 5,   // 数据条数小于这个数将不滚动
-        hoverStop: true,   // 鼠标悬停是否停止滚动
-        direction: 1,      // 0=向下，1=向上
-        openWatch: true,   // 开启数据实时监听刷新
-        singleHeight: 30,  // 单条数据的高度
-        waitTime: 1000     // 每次滚动间隔
-      },
-      listData: [],
-      listData1: [],
-      listData2: [],
       pipeData1:[],
       pipeData2:[],
       optionData:[],
@@ -154,42 +118,14 @@ export default {
     }
   },
   mounted() {
-    getList().then(response => {
-      this.listData = response.data;
-      this.listData1 = this.filterAndReplaceTitle('水位计', '马梪站');
-      this.listData2 =this.filterAndReplaceTitle('雨量计', '马梪站');
-      // let result = []
-      // for (let i = 0; i < this.listData2; i++) {
-      //   let obj = this.listData2[i];
-      //   console.log(obj)
-      //   if (obj.title.includes('水位计')){
-      //     obj.title = obj.title.replace('雨量计','');
-      //   }
-      //   result.push(obj)
-      // }
-      // this.listData2 = result;
-      // console.error(this.listData2)
-    });
     this.timer = setInterval(() => {
-      // if (this.showDate1){
-      //   this.showDate1  = false;
-      // }
-      // if (this.showDate2){
-      //   this.showDate2  = false;
-      // }
-      const xData = this.generateTime(1,10)
-      const result1 = []
-      const water1 = window.localStorage.getItem('water1')
-      const water2 = window.localStorage.getItem('water2')
-      for (let i = 0; i < xData.length; i++) {
-        result1.push({date:xData[i],title:" 外江水位:"+water1+"mm"})
-        result1.push({date:xData[i],title:" 内江水位:"+water2+"mm"})
+      if (this.showDate1){
+        this.showDate1  = false;
       }
-      // this.listData1  = result1;
-      this.listData1 = result1
-      this.scrollKey++  // 触发组件重新渲染
-      // console.error('xxxxxxxxxxxxx11111111111',result1)
-    }, 6000)
+      if (this.showDate2){
+        this.showDate2  = false;
+      }
+    }, 8000)
     this.drawPipe();
     // this.drawLine();
     // this.drawBar();
@@ -239,42 +175,14 @@ export default {
       this.drawPipe(rs);
       this.drawPieRight('泵站');
     });
-    // this.setDate(1);
-    // this.getData(1);
-    // this.getData(2);
+    this.setDate(1);
+    this.getData(1);
+    this.getData(2);
   },
   beforeDestroy() {
     clearInterval(this.timer)
   },
   methods:{
-    filterAndReplaceTitle(keyword, targetText, replacement = '') {
-      return this.listData
-        .filter(item => item.title.includes(keyword))
-        .map(item => {
-          return {
-            ...item,
-            title: item.title.replace(targetText, replacement)
-          }
-        });
-    },
-    generateTime(type = 1, intervalMinutes = 5) {
-      const now = new Date();
-      let start, end;
-      start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0); // 今天 00:00
-      end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 55, 0); // 今天 00:00
-
-      const result = [];
-
-      for (let time = new Date(start); time <= end; time.setMinutes(time.getMinutes() + intervalMinutes)) {
-        result.push(this.formatDateTime(new Date(time)));
-      }
-      return result;
-    },
-    formatDateTime(date) {
-      const pad = n => String(n).padStart(2, '0');
-      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ` +
-        `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
-    },
     setDate(type){
       const today = new Date();
       const yesterday = new Date();
@@ -310,9 +218,9 @@ export default {
           dateRange: this.value2[0]+"_"+this.value2[1],
         }
       }
-      // console.error('999',this.value1)
+      console.error('999',this.value1)
       getData(queryParam).then(response => {
-        // console.error('xxxxx',response)
+        console.error('xxxxx',response)
         let obj1 = this.$refs.b1;
         let obj2 = this.$refs.b2;
         if (type === 2){
@@ -839,7 +747,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .leftBox{
-  width: 22%;
+  width: 28%;
   float: left;
   height: calc(100vh - 90px);
   background-image: url("../../assets/u0_503.gif") ;
@@ -875,7 +783,7 @@ export default {
   float: left;
   width: 30%;
   height: 50%;
-  margin-top:3%;
+  margin-top:2%;
   border:none;
   opacity: 0.5;
 }
@@ -883,7 +791,7 @@ export default {
   float: left;
   width: 30%;
   height: 50%;
-  margin-top:3%;
+  margin-top:2%;
   opacity: 0.5;
 }
 .titleInfo{
@@ -891,7 +799,7 @@ export default {
   height: 100%;
   float: left;
   color:#27DBEC;
-  font-size: 16px;
+  font-size: 20px;
   text-align: center;
   line-height: 40px;
 }

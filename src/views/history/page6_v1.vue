@@ -13,9 +13,9 @@
           <div style="margin-left: 15px;font-size: 20px;font-weight: bold;margin-top: -4px;">闸门运行运行记录</div>
         </div>
 
-        <div class="searchBox" style="padding:20px 0px;background-color: white;width: 100%;height: 60px;border-bottom:1px solid #D6E7F7; ">
+        <div class="searchBox" style="padding:20px 0px;background-color: white;width: 100%;height: 120px;border-bottom:1px solid #D6E7F7; ">
           <el-form :model="queryParams1" ref="queryForm" size="small" :inline="true" v-show="showSearch">
-            <el-form-item label="监测要素" prop="deviceId"  style="margin-left: 20px;" v-if="false">
+            <el-form-item label="监测要素" prop="deviceId"  style="margin-left: 20px;">
               <el-checkbox-group v-model="checkList" @change="handleChange">
                 <el-checkbox label="1">耗能信息</el-checkbox>
                 <el-checkbox label="2">内河水位</el-checkbox>
@@ -24,7 +24,7 @@
                 <el-checkbox label="5">开启时间</el-checkbox>
               </el-checkbox-group>
             </el-form-item>
-            <el-form-item  prop="deviceId"  style="width: 600px;" v-if="false"></el-form-item>
+            <el-form-item  prop="deviceId"  style="width: 600px;"></el-form-item>
             <el-form-item label="监测时间" prop="repairTime"  style="margin-left: 20px;">
               <el-date-picker
                 v-model="date1"
@@ -41,18 +41,12 @@
           </el-form>
         </div>
         <div  style="height: 130vh;background-color: white;">
-          <div id="main12" v-show="check12" style="width: 48%;height: 200px;float: left;"></div>
-          <div id="main13" v-show="check13" style="width: 48%;height: 200px;float: left;"></div>
-          <div id="main14" v-show="check14" style="width: 48%;height: 200px;float: left;"></div>
-          <div id="main15" v-show="check15" style="width: 48%;height: 200px;float: left;"></div>
-          <div id="main16" v-show="check16" style="width: 48%;height: 200px;float: left;"></div>
-          <div id="main17" v-show="check17" style="width: 48%;height: 200px;float: left;"></div>
-          <div id="main18" v-show="check18" style="width: 48%;height: 200px;float: left;"></div>
-          <div id="main19" v-show="check19" style="width: 48%;height: 200px;float: left;"></div>
-          <div id="main20" v-show="check20" style="width: 48%;height: 200px;float: left;"></div>
-          <div id="main21" v-show="check21" style="width: 48%;height: 200px;float: left;"></div>
-          <div id="main22" v-show="check22" style="width: 48%;height: 200px;float: left;"></div>
-          <div id="main23" v-show="check23" style="width: 48%;height: 200px;float: left;"></div>
+          <div id="main1" v-show="check1" style="width: 100%;height: 200px;float: left;"></div>
+          <div id="main2" v-show="check2" style="width: 100%;height: 200px;float: left;"></div>
+          <div id="main3" v-show="check3" style="width: 100%;height: 200px;float: left;"></div>
+          <div id="main4" v-show="check4" style="width: 100%;height: 200px;float: left;"></div>
+          <div id="main5" v-show="check4" style="width: 100%;height: 200px;float: left;"></div>
+          <div id="main6" v-show="check5" style="width: 100%;height: 200px;float: left;"></div>
         </div>
       </div>
 
@@ -78,18 +72,11 @@ export default {
       // value: '1',
       date:'',
       date1:'',
-      check12:true,
-      check13:true,
-      check14:true,
-      check15:true,
-      check16:true,
-      check17:true,
-      check18:true,
-      check19:true,
-      check20:true,
-      check21:true,
-      check22:true,
-      check23:true,
+      check1:true,
+      check2:true,
+      check3:true,
+      check4:true,
+      check5:true,
       rainList:[],
       queryParams: {
         type: 1,
@@ -97,22 +84,7 @@ export default {
         deviceId: null,
       },
       checkList: ["1","2","3","4","5"],
-      gateList:[
-        {"name":"1号工作闸","value":"2d6d051613bb4762ac822b05f1a1337b"},
-        {"name":"2号工作闸","value":"893f70b39c2541d89f06edad12bcc863"},
-        {"name":"3号工作闸","value":"afb35f6927964c81a6751b863ae1998b"},
-        {"name":"4号工作闸","value":"14749b2c6ca74f56b29a507495ae68a3"},
-        {"name":"5号工作闸","value":"14749b2c6ca74f56b29a507495ae68a4"},
-        {"name":"6号工作闸","value":"14749b2c6ca74f56b29a507495ae68a5"},
-        {"name":"7号工作闸","value":"14749b2c6ca74f56b29a507495ae68a6"},
-        {"name":"8号工作闸","value":"14749b2c6ca74f56b29a507495ae68a7"},
-        {"name":"1号防洪闸","value":"c5fcabe7e9104e14af6975fd8d8c2625"},
-        {"name":"2号防洪闸","value":"c5fcabe7e9104e14af6975fd8d8c2626"},
-        {"name":"3号防洪闸","value":"c5fcabe7e9104e14af6975fd8d8c2627"},
-        {"name":"4号防洪闸","value":"c5fcabe7e9104e14af6975fd8d8c2628"},
-        // {"name":"左岸工作闸","value":"1cdc8b7fb90b488099f2dca53dd1b268"},
-        // {"name":"右岸工作闸","value":"c5fcabe7e9104e14af6975fd8d8c2624"},
-      ],
+      gateList:[{"name":"闸门1","value":"2d6d051613bb4762ac822b05f1a1337b"},{"name":"闸门2","value":"893f70b39c2541d89f06edad12bcc863"}],
       queryParams1: {
         siteId: null,
         deviceId: null,
@@ -137,7 +109,7 @@ export default {
     //   }
     // });
     this.queryParams1.deviceId = '2d6d051613bb4762ac822b05f1a1337b';
-    this.handleQuery1(12);
+    this.handleQuery1();
     // query1({  }).then(response => {
     //   //console.log(response)
     //   this.rainList =response.data;
@@ -151,70 +123,42 @@ export default {
   },
   methods:{
     getChildMsg(val){
-      if (!val || this.gateList[val-12].value === undefined) {
-        return;
-      }
       if (val>10){
-        this.queryParams1.deviceId = this.gateList[val-12].value;
+        this.queryParams1.deviceId = this.gateList[val-11].value;
       }else {
         this.queryParams1.deviceId = '2d6d051613bb4762ac822b05f1a1337b';
       }
-      this.handleQuery1(val);
+      this.handleQuery1();
     },
-    drawRightChart(val,obj){
-      let id = 'main'+val;
-      // console.log(id)
-      let title = this.gateList[val-12].name;
-      // console.log(title)
-      this.drawChart(id,title,obj.data,obj.date);
-      // this.drawChart2('main2','内河水位','内河水位(mm)',obj.data[4],obj.date,'#96D379');
-      // this.drawChart2('main3','外河水位','外河水位(mm)',obj.data[5],obj.date,'#FBCF5A');
-      // this.drawChart2('main4','雨量信息','瞬时雨量(mm)',obj.data[6],obj.date,'#5674CD');
-      // this.drawChart2('main5','累计雨量','累计雨量(mm)',obj.data[7],obj.date,'#E62100');
-      // this.drawChart2('main6','开次次数','开次次数(次)',obj.data[3],obj.date,'#E62100');
+    drawRightChart(obj){
+      this.drawChart(obj.data,obj.date);
+      this.drawChart2('main2','内河水位','内河水位(mm)',obj.data[4],obj.date,'#96D379');
+      this.drawChart2('main3','外河水位','外河水位(mm)',obj.data[5],obj.date,'#FBCF5A');
+      this.drawChart2('main4','雨量信息','瞬时雨量(mm)',obj.data[6],obj.date,'#5674CD');
+      this.drawChart2('main5','累计雨量','累计雨量(mm)',obj.data[7],obj.date,'#E62100');
+      this.drawChart2('main6','开次次数','开次次数(次)',obj.data[3],obj.date,'#E62100');
     },
     handleChange(val){
       let array =val;
-      for (let i = 12; i < 24; i++) {
+      for (let i = 1; i < 6; i++) {
         let flag = false;
         if (array.indexOf(''+i) !== -1){
           flag = true;
         }
-        if (i === 12){
-          this.check12 = flag;
+        if (i === 1){
+          this.check1 = flag;
         }
-        if (i === 13){
-          this.check13 = flag;
+        if (i === 2){
+          this.check2 = flag;
         }
-        if (i === 14){
-          this.check14 = flag;
+        if (i === 3){
+          this.check3 = flag;
         }
-        if (i === 15){
-          this.check15 = flag;
+        if (i === 4){
+          this.check4 = flag;
         }
-        if (i === 16){
-          this.check16 = flag;
-        }
-        if (i === 17){
-          this.check17 = flag;
-        }
-        if (i === 18){
-          this.check18 = flag;
-        }
-        if (i === 19){
-          this.check19 = flag;
-        }
-        if (i === 20){
-          this.check20 = flag;
-        }
-        if (i === 21){
-          this.check21 = flag;
-        }
-        if (i === 22){
-          this.check22 = flag;
-        }
-        if (i === 23){
-          this.check23 = flag;
+        if (i === 5){
+          this.check5 = flag;
         }
       }
       for(let i=0;i<array.length;i++){
@@ -223,7 +167,7 @@ export default {
       }
       console.log(val)
     },
-    handleQuery1(val){
+    handleQuery1(){
       if (this.date1){
         let v = this.date1[0]
         v = v.replace("00:00:00","").trim();
@@ -235,7 +179,7 @@ export default {
       //console.error(this.queryParams1)
       getSiteDay(this.queryParams1).then(response => {
         let obj = response.data;
-        this.drawRightChart(val,obj);
+        this.drawRightChart(obj);
       });
     },
     resetQuery1(){
@@ -293,26 +237,20 @@ export default {
         this.loading = false;
       });
     },
-    drawChart(id,title,array,date){
-      var chartDom = document.getElementById(id);
+    drawChart(array,date){
+      var chartDom = document.getElementById('main1');
       var myChart = echarts.init(chartDom);
       var option;
 
       option = {
         title: {
-          text: title,
-          left: '16%', // 水平居中（相对容器宽度）
-          top: '1%',  // 距离顶部10%位置
-          textStyle: {
-            fontSize: 12,
-            color: '#333'
-          }
+          text: ''
         },
         tooltip: {
           trigger: 'axis'
         },
         legend: {
-          data: ['内河水位', '外河水位', '雨量信息', '运行时长']
+          data: ['电流', '电压', '总功率']
         },
         grid: {
           left: '3%',
@@ -334,28 +272,22 @@ export default {
         },
         series: [
           {
-            name: '内河水位',
+            name: '电流',
             type: 'line',
             stack: 'Total',
-            data: array[4]
+            data: array[1]
           },
           {
-            name: '外河水位',
+            name: '电压',
             type: 'line',
             stack: 'Total',
-            data: array[5]
+            data: array[0]
           },
           {
-            name: '雨量信息',
+            name: '总功率',
             type: 'line',
             stack: 'Total',
-            data: array[6]
-          },
-          {
-            name: '运行时长',
-            type: 'line',
-            stack: 'Total',
-            data: array[3]
+            data: array[2]
           },
         ]
       };

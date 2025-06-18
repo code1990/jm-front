@@ -24,8 +24,8 @@
               node-key="id"
               @node-click="handleNodeClick"
               @check-change="checkNodeChange"
-              :default-expanded-keys="[0, 10]"
-              :default-checked-keys="[1]"
+              :default-expanded-keys="[0, 12]"
+              :default-checked-keys="[1,12]"
               :props="defaultProps" style="margin-left: 20%;"></el-tree>
 <!--            <el-menu-item index="7-1"><router-link to="/water1"><div style="margin-left: 30px;font-size: 16px;">电排站运行记录</div></router-link></el-menu-item>-->
 <!--            <el-menu-item index="7-2"><router-link to="/water2"><div style="margin-left: 30px;font-size: 16px;">工作闸运行记录</div></router-link></el-menu-item>-->
@@ -148,10 +148,10 @@ export default {
             id: 21,
             label: '2号防洪闸'
           },{
-              id: 20,
+              id: 22,
               label: '3号防洪闸'
             }, {
-              id: 21,
+              id: 23,
               label: '4号防洪闸'
             }]
         }],
@@ -186,7 +186,7 @@ export default {
     methods: {
       checkNodeChange(node,data,value){
         let id = node.id;
-        console.log(id)
+        console.error(id)
         if (data){
           if (id>10){
             this.$router.push("/water2")

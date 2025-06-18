@@ -65,7 +65,16 @@
   </div>
 </template>
 <script>
-import { getDict,getQuery1,getQuery2,getQuery3,getQuery4,getStatDetail,getStatCount } from "@/api/point/point";
+import {
+  getDict,
+  getQuery1,
+  getQuery2,
+  getQuery3,
+  getQuery4,
+  getStatDetail,
+  getStatCount,
+  getList
+} from '@/api/point/point'
 // import * as echarts from 'echarts';
 export default {
   name: 'LeftBox',
@@ -137,15 +146,25 @@ export default {
     getDict().then(response => {
       let deviceId = response.data[0].value;
       let data = response.data;
+      // 替换每一项的 name 为 "雨量计"
+      data = data.map(item => {
+        return {
+          ...item,
+          label: '马梪站-水位计1'
+        };
+      });
       this.options1 = data;
-      this.options2 = data;
+      this.options2 = response.data;
       this.value2 = deviceId;
       this.value1 = deviceId;
       getQuery1(this.value1).then(response => {
         let array = response.data;
         let lastData = this.getMonthData(array[0]);
         let currentData = this.getMonthData(array[1]);
-        this.drawMonthLine(this.$refs.b,lastData,currentData);
+        let data3 = this.getMonthData(array[2]);
+        let data4 = this.getMonthData(array[3]);
+        this.drawWaterMonthLine(this.$refs.b,lastData,currentData,data3,data4);
+
       });
       getQuery3(this.value2).then(response => {
         let array = response.data;
@@ -181,6 +200,9 @@ export default {
     getStatCount().then(response => {
       this.obj = response.data;
       //console.log(response.data)
+    });
+    getList().then(response => {
+      this.listData = response.data;
     });
   },
   methods:{
@@ -242,14 +264,18 @@ export default {
             let array = response.data;
             let lastData = this.getMonthData(array[0]);
             let currentData = this.getMonthData(array[1]);
-            this.drawMonthLine(this.$refs.b,lastData,currentData);
+            let data3 = this.getYearData(array[2]);
+            let data4 = this.getYearData(array[3]);
+            this.drawWaterMonthLine(this.$refs.b,lastData,currentData,data3,data4);
           });
         }else{
           getQuery2(this.value1).then(response => {
             let array = response.data;
             let lastData = this.getYearData(array[0]);
             let currentData = this.getYearData(array[1]);
-            this.drawYearLine(this.$refs.b,lastData,currentData);
+            let data3 = this.getYearData(array[2]);
+            let data4 = this.getYearData(array[3]);
+            this.drawRainYearLine(this.$refs.b,lastData,currentData,data3,data4);
           });
         }
       }else {
@@ -281,7 +307,9 @@ export default {
               let array = response.data;
               let lastData = this.getYearData(array[0]);
               let currentData = this.getYearData(array[1]);
-              this.drawYearLine(this.$refs.b,lastData,currentData);
+              let data3 = this.getYearData(array[2]);
+              let data4 = this.getYearData(array[3]);
+              this.drawRainYearLine(this.$refs.b,lastData,currentData,data3,data4);
             });
           }else {
             this.cls1= 'active';
@@ -291,7 +319,9 @@ export default {
               let array = response.data;
               let lastData = this.getMonthData(array[0]);
               let currentData = this.getMonthData(array[1]);
-              this.drawMonthLine(this.$refs.b,lastData,currentData);
+              let data3 = this.getYearData(array[2]);
+              let data4 = this.getYearData(array[3]);
+              this.drawWaterMonthLine(this.$refs.b,lastData,currentData,data3,data4);
             });
           }
         }else {
@@ -303,7 +333,9 @@ export default {
               let array = response.data;
               let lastData = this.getYearData(array[0]);
               let currentData = this.getYearData(array[1]);
-              this.drawYearLine(this.$refs.b,lastData,currentData);
+              let data3 = this.getYearData(array[2]);
+              let data4 = this.getYearData(array[3]);
+              this.drawRainYearLine(this.$refs.b,lastData,currentData,data3,data4);
             });
           }else {
             this.cls1= 'active';
@@ -313,7 +345,9 @@ export default {
               let array = response.data;
               let lastData = this.getMonthData(array[0]);
               let currentData = this.getMonthData(array[1]);
-              this.drawMonthLine(this.$refs.b,lastData,currentData);
+              let data3 = this.getYearData(array[2]);
+              let data4 = this.getYearData(array[3]);
+              this.drawWaterMonthLine(this.$refs.b,lastData,currentData,data3,data4);
             });
           }
         }
@@ -364,6 +398,170 @@ export default {
           }
         }
       }
+    },
+    drawWaterMonthLine(obj,lastData,currentData,data3,data4){
+      let myChart = this.$echarts.init(obj);
+      let option = {
+        xAxis: {
+          type: 'category',
+          name:'天',
+          data: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31']
+        },
+        legend: {
+          data: ['上月内河水位', '上月外河水位', '本月内河水位', '本月外河水位']
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        yAxis: {
+          type: 'value',
+          name:'单位(mm)'
+        },
+        grid: {
+          left: '3%',
+          right: '12%',
+          bottom: '3%',
+          top:'15%',
+          containLabel: true
+        },
+        series: [
+          {
+            data: lastData,
+            type: 'line',
+            name:'上月内河水位',
+            itemStyle: {
+              normal: {
+                color: '#ff6f73', //改变折线点的颜色
+                lineStyle: {
+                  color: '#ff6f73' //改变折线颜色
+                }
+              }
+            },
+          },
+          {
+            data: currentData,
+            type: 'line',
+            name:'上月外河水位',
+            itemStyle: {
+              normal: {
+                color: '#409EFF', //改变折线点的颜色
+                lineStyle: {
+                  color: '#409EFF' //改变折线颜色
+                }
+              }
+            },
+          },
+          {
+            data: data3,
+            type: 'line',
+            name:'本月内河水位',
+            itemStyle: {
+              normal: {
+                color: '#91CC75', //改变折线点的颜色
+                lineStyle: {
+                  color: '#91CC75' //改变折线颜色
+                }
+              }
+            },
+          },
+          {
+            data: data4,
+            type: 'line',
+            name:'本月外河水位',
+            itemStyle: {
+              normal: {
+                color: '#5470C6', //改变折线点的颜色
+                lineStyle: {
+                  color: '#5470C6' //改变折线颜色
+                }
+              }
+            },
+          }
+        ]
+      };
+      myChart.setOption(option);
+    },
+    drawRainYearLine(obj,lastData,currentData,data3,data4){
+      let myChart = this.$echarts.init(obj);
+      let option = {
+        xAxis: {
+          type: 'category',
+          name:'月',
+          data: ['1','2','3','4','5','6','7','8','9','10','11','12']
+        },
+        legend: {
+          data: ['去年内河水位', '去年外河水位','今年内河水位', '今年外河水位']
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        yAxis: {
+          type: 'value',
+          name:'单位(mm)'
+        },
+        grid: {
+          left: '3%',
+          right: '12%',
+          bottom: '3%',
+          top:'15%',
+          containLabel: true
+        },
+        series: [
+          {
+            data: lastData,
+            type: 'line',
+            name:'去年内河水位',
+            itemStyle: {
+              normal: {
+                color: '#ff6f73', //改变折线点的颜色
+                lineStyle: {
+                  color: '#ff6f73' //改变折线颜色
+                }
+              }
+            },
+          },
+          {
+            data: currentData,
+            type: 'line',
+            name:'去年外河水位',
+            itemStyle: {
+              normal: {
+                color: '#409EFF', //改变折线点的颜色
+                lineStyle: {
+                  color: '#409EFF' //改变折线颜色
+                }
+              }
+            },
+          },
+          {
+            data: data3,
+            type: 'line',
+            name:'今年内河水位',
+            itemStyle: {
+              normal: {
+                color: '#91CC75', //改变折线点的颜色
+                lineStyle: {
+                  color: '#91CC75' //改变折线颜色
+                }
+              }
+            },
+          },
+          {
+            data: data4,
+            type: 'line',
+            name:'今年外河水位',
+            itemStyle: {
+              normal: {
+                color: '#5470C6', //改变折线点的颜色
+                lineStyle: {
+                  color: '#5470C6' //改变折线颜色
+                }
+              }
+            },
+          }
+        ]
+      };
+      myChart.setOption(option);
     },
     drawMonthLine(obj,lastData,currentData){
       let myChart = this.$echarts.init(obj);
@@ -416,7 +614,7 @@ export default {
                 }
               }
             },
-          }
+          },
         ]
       };
       myChart.setOption(option);

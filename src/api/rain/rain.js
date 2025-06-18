@@ -82,3 +82,10 @@ export function delRain(id) {
     method: 'delete'
   })
 }
+export function getData(query){
+  return request({
+    url: '/tool/rain/data',
+    method: 'get',
+    params: query
+  })
+}

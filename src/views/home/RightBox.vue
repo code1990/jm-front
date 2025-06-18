@@ -85,11 +85,19 @@
         </div>
       </div>
       <div style="height: 23vh;float: left;overflow-y: auto;width: 100%">
-        <div v-for="(item,index) in pointList" :key="index">
-          <el-col :span="24" style="padding-bottom: 10px;">
-            <div  class="siteInfo">{{ index+1 }}</div>  {{ item.siteName }} <el-button type="warning" size="mini" style="background-color: #FD7625;margin-left: 20px;" @click="queryDetail(item)">查看详情</el-button>
-          </el-col>
-        </div>
+<!--        <div v-for="(item,index) in pointList" :key="index">-->
+<!--          <el-col :span="24" style="padding-bottom: 10px;">-->
+<!--            <div  class="siteInfo">{{ index+1 }}</div>  {{ item.siteName }} <el-button type="warning" size="mini" style="background-color: #FD7625;margin-left: 20px;" @click="queryDetail(item)">查看详情</el-button>-->
+<!--          </el-col>-->
+<!--        </div>-->
+        <vue-seamless-scroll :data="listData" class="scroll-box" :class-option="option">
+          <ul class="custom-list" style="margin-left: -20px;">
+            <li v-for="(item, index) in listData" :key="index">
+              <span class="date" v-text="item.date"></span>
+              <span class="title" v-text="item.title"></span>
+            </li>
+          </ul>
+        </vue-seamless-scroll>
       </div>
     </div>
   </div>
@@ -97,14 +105,19 @@
 <script>
 import { getStatCount } from "@/api/point/point";
 import {queryStation,queryLast } from "@/api/station/station";
-import { getLast } from "@/api/point/point";
+import { getList } from "@/api/point/point";
+import vueSeamlessScroll from 'vue-seamless-scroll'
+
 export default {
   name: 'RightBox',
+  components: {
+    vueSeamlessScroll
+  },
   data() {
     return {
       obj:{
         v4:1,
-        v5:8,
+        v5:12,
         v6:4,
         v7:2,
       },
@@ -119,6 +132,16 @@ export default {
       siteId:null,
       v1List:[{},{},{},{}],
       timer:null,
+      listData: [],
+      option: {
+        step: 0.5,         // 滚动速度，值越小越慢
+        limitMoveNum: 5,   // 数据条数小于这个数将不滚动
+        hoverStop: true,   // 鼠标悬停是否停止滚动
+        direction: 1,      // 0=向下，1=向上
+        openWatch: true,   // 开启数据实时监听刷新
+        singleHeight: 30,  // 单条数据的高度
+        waitTime: 1000     // 每次滚动间隔
+      },
       v3: {
         a1:null,
         a2:null,
@@ -145,6 +168,25 @@ export default {
     }
   },
   mounted() {
+    // for (let i = 0; i < 10; i++) {
+    //   const now = new Date();
+    //   const oneMinuteAgo = new Date(now.getTime() - i * 60 * 1000);
+    //   let obj1 = {
+    //     'title': '内江水位:62mm',
+    //     'date': this.formatDate(oneMinuteAgo)
+    //   }
+    //   let obj2 = {
+    //     'title': '外江水位:162mm',
+    //     'date': this.formatDate(oneMinuteAgo)
+    //   }
+    //   let obj3 = {
+    //     'title': '降雨量:0mm',
+    //     'date': this.formatDate(oneMinuteAgo)
+    //   }
+    //   this.listData.push(obj1);
+    //   this.listData.push(obj2);
+    //   this.listData.push(obj3);
+    // }
     getStatCount().then(response => {
       // this.obj = response.data;
       //console.log(response.data)
@@ -165,11 +207,16 @@ export default {
         this.getDetailInfo(array);
       });
     });
-    getLast().then(response => {
-      this.pointList = response.data;
+    getList().then(response => {
+      this.listData = response.data;
     });
   },
   methods:{
+    formatDate(date) {
+      const pad = n => n < 10 ? '0' + n : n;
+      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} `
+        + `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+    },
     getLastInfo(){
       this.timer = setInterval(() => {
         queryStation().then(response => {
@@ -188,7 +235,7 @@ export default {
             this.getDetailInfo(array);
           });
         });
-        getLast().then(response => {
+        getList().then(response => {
           this.pointList = response.data;
         });
       }, 60000);
@@ -329,5 +376,9 @@ export default {
   margin-left: 10px;
   margin-right: 10px;
   margin-top: 3px;
+}
+ul.custom-list li {
+  list-style-type: none; /* 移除点 */
+  padding-left: 0;
 }
 </style>

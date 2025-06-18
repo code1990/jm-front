@@ -204,7 +204,7 @@ export default {
                 position: 'inside',
                 show: true,
                 formatter: (d) => {
-                  return d.percent + '%'
+                  return (d.percent?d.percent:'0') + '%'
                 }
               }
             }

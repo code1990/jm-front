@@ -134,19 +134,6 @@ export default {
         let obj = response.data;
         console.log(obj)
         this.setDevice(obj);
-        if (obj.runTime){
-          //runTime
-          const totalSeconds = Math.floor(hours * 3600);
-
-          const days = Math.floor(totalSeconds / (24 * 3600));
-          const hoursLeft = Math.floor((totalSeconds % (24 * 3600)) / 3600);
-          const minutes = Math.floor((totalSeconds % 3600) / 60);
-          const seconds = totalSeconds % 60;
-          this.runTimeObj.day = days;
-          this.runTimeObj.hour = hoursLeft;
-          this.runTimeObj.minute = minutes;
-          this.runTimeObj.seconds = seconds;
-        }
       });
 
       getStatus(deviceId).then(response => {

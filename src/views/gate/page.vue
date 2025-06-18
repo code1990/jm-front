@@ -412,12 +412,12 @@ export default {
       });
       let info = this.id+"_"+this.deviceId;
       //console.log(info)
-      getCamera(info).then(response => {
-        //console.log(response.data);
-        this.vTitle1 = response.data.deviceName;
-        let url = response.data.url;
-        this.webrtcPlay(this.flvPlayer1,'myVideoFlv',url);
-      });
+      // getCamera(info).then(response => {
+      //   //console.log(response.data);
+      //   this.vTitle1 = response.data.deviceName;
+      //   let url = response.data.url;
+      //   this.webrtcPlay(this.flvPlayer1,'myVideoFlv',url);
+      // });
     });
     // getVideoDict(this.id+"","2").then(response => {
     //   this.options2 = response.data;
@@ -433,10 +433,10 @@ export default {
     //this.webrtcPlay();
     getCameraList(this.id,"5").then(response => {
       let array = response.data;
-      this.webrtcPlay(this.flvPlayer2,'videoElement11',array[0].url);
-      this.webrtcPlay(this.flvPlayer3,'videoElement12',array[1].url);
-      this.webrtcPlay(this.flvPlayer4,'videoElement21',array[2].url);
-      this.webrtcPlay(this.flvPlayer5,'videoElement22',array[3].url);
+      this.webrtcPlay(this.flvPlayer2,'myVideoFlv',array[0].url);
+      this.webrtcPlay(this.flvPlayer3,'videoElement11',array[1].url);
+      this.webrtcPlay(this.flvPlayer4,'videoElement12',array[2].url);
+      this.webrtcPlay(this.flvPlayer5,'videoElement21',array[3].url);
       this.deviceId2 = array[0].deviceId;
       this.deviceId3 = array[1].deviceId;
       this.deviceId4 = array[2].deviceId;

@@ -608,6 +608,7 @@ export default {
     this.queryStationList();
   },
   mounted() {
+    console.error('2025-05-23 15:30:00')
     this.id = this.$route.params.id
     // console.error(this.$route.params.id)
     // this.createFlv("videoElement1");
@@ -638,7 +639,7 @@ export default {
     //   this.videoList = response.data;
     //   this.videoList2 =response.data;
     // });
-    getCameraList(this.id,"6").then(response => {
+    getCameraList(this.id,"5").then(response => {
       let array = response.data;
       this.webrtcPlay(this.flvPlayer2,'videoElement11',array[0].url);
       this.webrtcPlay(this.flvPlayer3,'videoElement12',array[1].url);

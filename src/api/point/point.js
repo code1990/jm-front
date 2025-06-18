@@ -95,3 +95,10 @@ export function getLast() {
   })
 }
 
+export function getList() {
+  return request({
+    url: '/tool/point/list3/',
+    method: 'get'
+  })
+}
+

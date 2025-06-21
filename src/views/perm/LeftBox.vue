@@ -20,6 +20,7 @@
             </template>
             <el-menu-item index="8-1"><router-link to="/role"><div style="margin-left: 30px;font-size: 16px;">角色管理</div></router-link></el-menu-item>
             <el-menu-item index="8-2"><router-link to="/user"><div style="margin-left: 30px;font-size: 16px;">用户管理</div></router-link></el-menu-item>
+<!--            <el-menu-item index="8-3"><router-link to="/device"><div style="margin-left: 30px;font-size: 16px;">设备管理</div></router-link></el-menu-item>-->
           </el-submenu>
         </el-menu>
       </el-col>

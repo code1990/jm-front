@@ -112,6 +112,11 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/device',
+    component: () => import('@/views/history/page7.vue'),
+    hidden: true
+  },
+  {
     path: '/water1',
     component: () => import('@/views/history/page5.vue'),
     hidden: true

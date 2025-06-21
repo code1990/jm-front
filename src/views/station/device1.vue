@@ -132,7 +132,6 @@ export default {
     getInfo(deviceId){
       queryLastInfo(deviceId).then(response => {
         let obj = response.data;
-        console.log(obj)
         this.setDevice(obj);
       });
 

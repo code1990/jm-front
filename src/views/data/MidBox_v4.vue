@@ -8,13 +8,11 @@
     <div class="midBox" style="width: 100%;float: left;height: 35%;">
       <div class="titleBox">
         <img :src="image1" class="leftImage">
-        <div class="titleInfo">外江水位监测曲线图</div>
-        <img :src="image2" class="rightImage">
-        <el-button size="mini" @click="checkData(1)" class="dateBox" >详情</el-button>
-        <el-button size="mini" @click="checkDate(1)" class="dateBox" v-if="false">请选择时间</el-button>
+        <div class="titleInfo">水位监测曲线图</div>
+        <el-button size="mini" @click="checkDate(1)" class="dateBox">请选择时间</el-button>
         <div class="titleTip"></div>
       </div>
-      <div style="float: right;z-index: 99" v-if="false">
+      <div style="float: right;z-index: 99">
         <el-date-picker
           v-if="showDate1"
           :key="'dp1-' + datePickerKey1"
@@ -33,26 +31,24 @@
         >
         </el-date-picker>
       </div>
-      <div style="float: right;" v-if="false">
+      <div style="float: right;">
         <el-radio-group v-model="radio1" size="mini" @change="updateChart(1)" class="pink-radio-group">
           <el-radio-button label="1" >日</el-radio-button>
           <el-radio-button label="2" >月</el-radio-button>
           <el-radio-button label="3" >年</el-radio-button>
         </el-radio-group>
       </div>
-      <div id="b1" style="height:250px;width:100%;float: left;" ref="b1"></div>
-      <div id="b2" style="height:120px;width:100%;float: left;" ref="b2" v-if="false"></div>
+      <div id="b1" style="height:130px;width:100%;float: left;" ref="b1"></div>
+      <div id="b2" style="height:120px;width:100%;float: left;" ref="b2"></div>
     </div>
     <div class="bottomBox">
       <div class="titleBox">
         <img :src="image1" class="leftImage">
-        <div class="titleInfo">内江水位监测曲线图</div>
-        <img :src="image2" class="rightImage">
-        <el-button size="mini" @click="checkData(2)" class="dateBox" >详情</el-button>
-        <el-button size="mini" @click="checkDate(2)" class="dateBox" v-if="false">请选择时间</el-button>
+        <div class="titleInfo">雨量监测柱状图</div>
+        <el-button size="mini" @click="checkDate(2)" class="dateBox">请选择时间</el-button>
         <div class="titleTip"></div>
       </div>
-      <div style="float: right;" v-if="false">
+      <div style="float: right;">
         <el-date-picker
           v-if="showDate2"
           :key="'dp2-' + datePickerKey2"
@@ -68,19 +64,18 @@
           :picker-options="pickerOptions"
           @change="(val) => onDateChange(val, 2)"
           @blur="showDate2=false"
-          v-i
         >
         </el-date-picker>
       </div>
-      <div style="float: right;"  v-if="false">
+      <div style="float: right;">
         <el-radio-group v-model="radio2" size="mini" @change="updateChart(2)" class="pink-radio-group">
           <el-radio-button label="1" >日</el-radio-button>
           <el-radio-button label="2" >月</el-radio-button>
           <el-radio-button label="3" >年</el-radio-button>
         </el-radio-group>
       </div>
-      <div id="c1" style="height:250px;width:100%;float: left;" ref="c1"></div>
-      <div id="c2" style="height:100px;width:100%;float: left;" ref="c2"  v-if="false"></div>
+      <div id="c1" style="height:100px;width:100%;float: left;" ref="c1"></div>
+      <div id="c2" style="height:100px;width:100%;float: left;" ref="c2"></div>
     </div>
 <!--    <div class="bottomBox">-->
 <!--      <div class="titleBox">-->
@@ -123,10 +118,9 @@
   </div>
 </template>
 <script>
-import { getList3, getStatCount } from '@/api/point/point'
+import { getStatCount } from "@/api/point/point";
 import {queryStation,queryLast } from "@/api/station/station";
 import { getData } from '@/api/rain/rain'
-import { getSiteDay } from '@/api/history/site'
 // import TMap from '@/views/data/TMap.vue'
 export default {
   name: 'MidBox',
@@ -143,13 +137,6 @@ export default {
       showDate2:false,
       datePickerKey1: 0,
       datePickerKey2: 0,
-      water11:[],
-      water12:[],
-      water21:[],
-      water22:[],
-      water31:[],
-      water32:[],
-      date:[],
       water1:0,
       water2:0,
       today:null,
@@ -209,57 +196,19 @@ export default {
   },
   mounted() {
 
-    // getStatCount().then(response => {
-    //   this.obj = response.data;
-    //   // console.log(response.data)
-    // });
+    getStatCount().then(response => {
+      this.obj = response.data;
+      // console.log(response.data)
+    });
 
     this.setDate(1);
     this.setDate(2);
     this.getData(1);
-    // this.getData(2);
-    // this.water1 = this.getRandomValue(100,120)
-    // this.water2 = this.getRandomValue(60,80)
-    getList3().then(response => {
-      // this.v1List = response.data;
-      this.date = response.data.date
-      this.water11 = response.data.data[0]
-      this.water12 = response.data.data[1]
-      this.water21 = response.data.data[2]
-      this.water22 = response.data.data[3]
-      this.water31 = response.data.data[4]
-      this.water32 = response.data.data[5]
-      // console.error(response.data)
-      const today = new Date()
-      const yesterday = new Date()
-      yesterday.setDate(today.getDate() - 1)
-      const dayBeforeYesterday = new Date()
-      dayBeforeYesterday.setDate(today.getDate() - 2)
-
-      // const todayStr = this.formatDate(today).replace(/-/g, '')
-      // const yesterdayStr = this.formatDate(yesterday).replace(/-/g, '')
-      // const dayBeforeStr = this.formatDate(dayBeforeYesterday).replace(/-/g, '')
-      // console.error('今天位置:', todayStr)
-      // console.error('昨天位置:', yesterdayStr)
-      // console.error('前天位置:', dayBeforeStr)
-      // const todayIndex = date.indexOf(todayStr)
-      // const yesterdayIndex = date.indexOf(yesterdayStr)
-      // const dayBeforeIndex = date.indexOf(dayBeforeStr)
-
-
-      // this.water11 = data1[todayIndex]  == null ? 0: data1[todayIndex]
-      // this.water12 = data1[yesterdayIndex] == null ? 0: data1[yesterdayIndex]
-      // this.water13 = data1[dayBeforeIndex] == null ? 0: data1[dayBeforeIndex]
-      // this.water21 = data2[todayIndex] == null ? 0: data2[todayIndex]
-      // this.water22 = data2[yesterdayIndex] == null ? 0: data2[yesterdayIndex]
-      // this.water23 = data2[dayBeforeIndex] == null ? 0: data2[dayBeforeIndex]
-
-      // window.localStorage.setItem('water1', this.water11 == null ? 0 : this.water11)
-      // window.localStorage.setItem('water2', this.water21 == null ? 0 : this.water11)
-
-      this.getData(1);
-    })
-
+    this.getData(2);
+    this.water1 = this.getRandomValue(100,120)
+    this.water2 = this.getRandomValue(60,80)
+    window.localStorage.setItem('water1', this.water1)
+    window.localStorage.setItem('water2', this.water2)
     const today = new Date();
     const yesterday = new Date();
     yesterday.setDate(today.getDate() - 1);
@@ -306,7 +255,7 @@ export default {
       getData(queryParam).then(response => {
         // console.error('xxxxx',response)
         let obj1 = this.$refs.b1;
-        let obj2 = this.$refs.c1;
+        let obj2 = this.$refs.b2;
         if (type === 2){
           obj1 = this.$refs.c1;
           obj2 = this.$refs.c2;
@@ -321,26 +270,26 @@ export default {
           title1 = "日降雨量";
           title2 = "累计降雨量";
           // 你应该已有 yesterday 和 today 这两个字段
-          // const todayKey1 = this.today + '_' + this.radio2 + '_1';
-          // const todayKey2 = this.today + '_' + this.radio2 + '_2';
-          // const yesterdayKey1 = this.yesterday + '_' + this.radio2 + '_1';
-          // const yesterdayKey2 = this.yesterday + '_' + this.radio2 + '_2';
+          const todayKey1 = this.today + '_' + this.radio2 + '_1';
+          const todayKey2 = this.today + '_' + this.radio2 + '_2';
+          const yesterdayKey1 = this.yesterday + '_' + this.radio2 + '_1';
+          const yesterdayKey2 = this.yesterday + '_' + this.radio2 + '_2';
           // ✅ 先删除昨天的缓存
-          // window.localStorage.removeItem(yesterdayKey1);
-          // window.localStorage.removeItem(yesterdayKey2);
+          window.localStorage.removeItem(yesterdayKey1);
+          window.localStorage.removeItem(yesterdayKey2);
 
           // ✅ 尝试从今天的缓存读取
-          // const cache1 = window.localStorage.getItem(todayKey1);
-          // const cache2 = window.localStorage.getItem(todayKey2);
+          const cache1 = window.localStorage.getItem(todayKey1);
+          const cache2 = window.localStorage.getItem(todayKey2);
 
-          // if (cache1 && cache2) {
-          //   yData1 = JSON.parse(cache1);
-          //   yData2 = JSON.parse(cache2);
-          // } else {
-          //   // ✅ 没缓存则写入
-          //   window.localStorage.setItem(todayKey1, JSON.stringify(yData1));
-          //   window.localStorage.setItem(todayKey2, JSON.stringify(yData2));
-          // }
+          if (cache1 && cache2) {
+            yData1 = JSON.parse(cache1);
+            yData2 = JSON.parse(cache2);
+          } else {
+            // ✅ 没缓存则写入
+            window.localStorage.setItem(todayKey1, JSON.stringify(yData1));
+            window.localStorage.setItem(todayKey2, JSON.stringify(yData2));
+          }
         }
         let color = "#1BB816";
         if (parseInt(this.radio1) ===2 || parseInt(this.radio2) ===2){
@@ -351,15 +300,15 @@ export default {
         if (type === 1){
           if (parseInt(this.radio1) ===1){
             // console.error('xxxxxxxxxxxxxxx')
-            // const xData = this.generateTime(1,10)
-            // const ydata1 = this.generateData2(1,10,this.water11)
-            // const ydata2 = this.generateData2(2,10,this.water12)
-            // const ydata3 = this.generateData2(2,10,this.water13)
-            this.drawLine3Days(obj1,this.date,this.water12,this.water22,this.water32,title1,unit);
-            // const ydata11 = this.generateData2(1,10,this.water21)
-            // const ydata21 = this.generateData2(2,10,this.water22)
-            // const ydata31 = this.generateData2(2,10,this.water23)
-            this.drawLine3Days(obj2,this.date,this.water11,this.water21,this.water31,title2,unit);
+            const xData = this.generateTime(1,10)
+            const ydata1 = this.generateData(1,10,100,120)
+            const ydata2 = this.generateData(2,10,100,120)
+            const ydata3 = this.generateData(2,10,100,120)
+            this.drawLine3Days(obj1,xData,ydata1,ydata2,ydata3,title1,unit);
+            const ydata11 = this.generateData(1,10,60,80)
+            const ydata21 = this.generateData(2,10,60,80)
+            const ydata31 = this.generateData(2,10,60,80)
+            this.drawLine3Days(obj2,xData,ydata11,ydata21,ydata31,title2,unit);
           }else {
             // console.error('aaaaaaaaaaaaaaaaa')
             this.drawLine3(obj1,xData,yData1,title1,unit,color);
@@ -371,13 +320,8 @@ export default {
         }
       });
     },
-
     updateChart(type){
       this.getData(type);
-    },
-    checkData(type){
-      // console.error( type)
-      this.$router.push({path: '/rainWater', query: {type: type}});
     },
     checkDate(type){
       if (type === 1) {
@@ -477,62 +421,48 @@ export default {
       }
       this.index=0;
     },
-    // formatDateTime2(date) {
-    //   const pad = n => String(n).padStart(2, '0');
-    //   return `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
-    // },
-    // generateTime(type = 1, intervalMinutes = 5) {
-    //   const now = new Date();
-    //   let start, end;
-    //   start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0); // 今天 00:00
-    //   end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 55, 0); // 今天 00:00
-    //
-    //   const result = [];
-    //
-    //   for (let time = new Date(start); time <= end; time.setMinutes(time.getMinutes() + intervalMinutes)) {
-    //     result.push(this.formatDateTime2(new Date(time)));
-    //   }
-    //   return result;
-    // },
-    // generateData(type = 1, intervalMinutes = 5,min=80,max=110) {
-    //   const now = new Date();
-    //   let start, end;
-    //   start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0); // 今天 00:00
-    //   end = now;
-    //   if (type!== 1){
-    //     end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 55, 0); // 今天 00:00
-    //   }
-    //   const result = [];
-    //   let v = this.getRandomValue(min, max)
-    //   if (type === 1 && min === 100){
-    //     v = this.water2;
-    //   }
-    //   if (type === 1 && min === 100){
-    //     v = this.water1;
-    //   }
-    //   for (let time = new Date(start); time <= end; time.setMinutes(time.getMinutes() + intervalMinutes)) {
-    //     result.push(v);
-    //   }
-    //   return result;
-    // },
-    // generateData2(type = 1, intervalMinutes = 5,v) {
-    //   const now = new Date();
-    //   let start, end;
-    //   start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0); // 今天 00:00
-    //   end = now;
-    //   if (type!== 1){
-    //     end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 55, 0); // 今天 00:00
-    //   }
-    //   const result = [];
-    //   for (let time = new Date(start); time <= end; time.setMinutes(time.getMinutes() + intervalMinutes)) {
-    //     result.push(v);
-    //   }
-    //   return result;
-    // },
+    formatDateTime2(date) {
+      const pad = n => String(n).padStart(2, '0');
+      return `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+    },
+    generateTime(type = 1, intervalMinutes = 5) {
+      const now = new Date();
+      let start, end;
+      start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0); // 今天 00:00
+      end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 55, 0); // 今天 00:00
+
+      const result = [];
+
+      for (let time = new Date(start); time <= end; time.setMinutes(time.getMinutes() + intervalMinutes)) {
+        result.push(this.formatDateTime2(new Date(time)));
+      }
+      return result;
+    },
+    generateData(type = 1, intervalMinutes = 5,min=80,max=110) {
+      const now = new Date();
+      let start, end;
+      start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0); // 今天 00:00
+      end = now;
+      if (type!== 1){
+        end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 55, 0); // 今天 00:00
+      }
+      const result = [];
+      let v = this.getRandomValue(min, max)
+      if (type === 1 && min === 100){
+        v = this.water2;
+      }
+      if (type === 1 && min === 100){
+        v = this.water1;
+      }
+      for (let time = new Date(start); time <= end; time.setMinutes(time.getMinutes() + intervalMinutes)) {
+        result.push(v);
+      }
+      return result;
+    },
     // 模拟数据值
-    // getRandomValue(min, max) {
-    //   return Math.floor(Math.random() * (max - min + 1)) + min;
-    // },
+    getRandomValue(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    },
     drawLine3Days(obj, xLabels, dataToday, dataYesterday, dataBeforeYesterday, title, unit) {
       const id = obj.id;
       if (this.myChartMap[id]) {
@@ -570,7 +500,7 @@ export default {
           }
         },
         grid: {
-          top: 40,
+          top: 20,
           bottom: 10,
           left: 10,
           right: 10,
@@ -798,15 +728,15 @@ export default {
   float: left;
   width: 30%;
   height: 50%;
-  margin-top:1.2%;
+  margin-top:2%;
   border:none;
   opacity: 0.5;
 }
 .rightImage{
   float: left;
-  width: 25%;
+  width: 30%;
   height: 50%;
-  margin-top:1.2%;
+  margin-top:2%;
   border:none;
   opacity: 0.5;
 }
@@ -931,12 +861,10 @@ export default {
 }
 .dateBox{
   margin-top: 10px;
-  margin-right: 10px;
+  margin-left: 10px;
   border: none;
-  background-color: #030C49;
+  background-color: #040C35;
   color: #27DBE0;
-  float: left;
-  position: fixed;
 }
 .pink-radio-group ::v-deep .el-radio-button__inner {
   background-color: #040C35;

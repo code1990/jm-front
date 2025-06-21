@@ -1,11 +1,20 @@
 <template>
-  <div class="rightBox">
+  <div class="leftBox">
     <div class="topBox">
+      <div class="titleBox">
+        <img :src="image1" class="leftImage">
+        <div class="titleInfo">年度闸开启统计</div>
+        <img :src="image2" class="rightImage">
+        <div class="titleTip"></div>
+      </div>
+      <div id="a" style="height:200px;width:49%;float: left;margin-top: 20px" ref="a"></div>
+      <div id="aa" style="height:200px;width:49%;float: left;margin-top: 20px" ref="aa"></div>
+    </div>
+    <div class="midBox">
       <div class="titleBox">
         <img :src="image1" class="leftImage">
         <div class="titleInfo" style="font-size: 16px;">水位监测实时信息</div>
         <img :src="image2" class="rightImage">
-        <el-button size="mini" @click="checkData(1)" class="dateBox" >详情</el-button>
         <el-button size="mini" @click="checkDate(1)" class="dateBox" v-if="false">请选择时间</el-button>
         <div class="titleTip"></div>
       </div>
@@ -19,17 +28,44 @@
           </ul>
         </vue-seamless-scroll>
       </div>
+<!--      <div style="float: right;z-index: 99">-->
+<!--        <el-date-picker-->
+<!--          v-if="showDate1"-->
+<!--          :key="'dp1-' + datePickerKey1"-->
+<!--          v-model="value1"-->
+<!--          type="daterange"-->
+<!--          align="right"-->
+<!--          size="mini"-->
+<!--          unlink-panels-->
+<!--          range-separator="至"-->
+<!--          start-placeholder="开始日期"-->
+<!--          end-placeholder="结束日期"-->
+<!--          value-format="yyyy-MM-dd"-->
+<!--          :picker-options="pickerOptions"-->
+<!--          @change="(val) => onDateChange(val, 1)"-->
+<!--          @blur="showDate1=false"-->
+<!--        >-->
+<!--        </el-date-picker>-->
+<!--      </div>-->
+<!--      <div style="float: right;">-->
+<!--        <el-radio-group v-model="radio1" size="mini" @change="updateChart(1)" class="pink-radio-group">-->
+<!--          <el-radio-button label="1" >日</el-radio-button>-->
+<!--          <el-radio-button label="2" >月</el-radio-button>-->
+<!--          <el-radio-button label="3" >年</el-radio-button>-->
+<!--        </el-radio-group>-->
+<!--      </div>-->
+<!--      <div id="b" style="height:100px;width:98%;float: left;" ref="b1"></div>-->
+<!--      <div id="b2" style="height:100px;width:98%;float: left;" ref="b2"></div>-->
     </div>
-    <div class="midBox">
+    <div class="bottomBox">
       <div class="titleBox">
         <img :src="image1" class="leftImage">
         <div class="titleInfo" style="font-size: 16px;">雨量监测实时信息</div>
         <img :src="image2" class="rightImage">
-        <el-button size="mini" @click="checkData(2)" class="dateBox" style="background-color:#070E37;">详情</el-button>
         <el-button size="mini" @click="checkDate(2)" class="dateBox" v-if="false">请选择时间</el-button>
         <div class="titleTip"></div>
       </div>
-      <div style="height: 24vh;float: left;overflow-y: auto;width: 100%;margin-top: 10px;">
+      <div style="height: 28vh;float: left;overflow-y: auto;width: 100%;margin-top: 10px;">
         <vue-seamless-scroll :data="listData2" class="scroll-box" :class-option="option">
           <ul class="custom-list" style="margin-left: -20px;">
             <li v-for="(item, index) in listData2" :key="index" style="color:white;">
@@ -39,50 +75,34 @@
           </ul>
         </vue-seamless-scroll>
       </div>
-    </div>
-    <div class="bottomBox">
-      <div class="titleBox">
-        <img :src="image1" class="leftImage">
-        <div class="titleInfo">设备状态信息</div>
-        <img :src="image2" class="rightImage">
-        <el-button size="mini" @click="checkData(3)" class="dateBox" style="background-color:#020B44;">详情</el-button>
-        <div class="titleTip"></div>
-      </div>
-      <div  class="contentBox" >
-        <div class="optionBox" v-if="false">
-          <el-radio-group v-model="index">
-            <el-radio :label="0" style="color: white;">泵1</el-radio>
-            <el-radio :label="1" style="color: white;" >泵2</el-radio>
-            <el-radio :label="2" style="color: white;" >泵3</el-radio>
-            <el-radio :label="3" style="color: white;" >泵4</el-radio>
-          </el-radio-group>
-        </div>
-        <div class="detailBox" style="height: 24vh;overflow-y: auto;">
-          <el-row :gutter="24">
-            <el-col
-              v-for="(item, index) in deviceStatusList"
-              :key="item.deviceId || index"
-              :span="24"
-              style="padding: 3px 3px;"
-            >
-              <div class="grid-content bg-purple">{{ item.deviceName }}：<span style="color:#67C23A;">正常</span>&nbsp;&nbsp;&nbsp;&nbsp;<el-button type="text" disabled>故障详情</el-button></div>
-            </el-col>
-          </el-row>
-<!--          <el-col :span="12" style="padding: 12px 3px;" v-for="(item,index) in deviceStatusList">-->
-<!--            <div class="grid-content bg-purple">{{ item.deviceName }}：正常</div>-->
-<!--          </el-col>-->
-<!--          <el-col :span="12" style="padding: 12px 3px;"><div class="grid-content bg-purple">A相电流：{{v1List[index].a1}}A</div></el-col>-->
-
-<!--          <el-col :span="12" style="padding: 12px 3px;"><div class="grid-content bg-purple">B相电压：{{v1List[index].v1}}V</div></el-col>-->
-<!--          <el-col :span="12" style="padding: 12px 3px;"><div class="grid-content bg-purple">B相电流：{{v1List[index].a2}}A</div></el-col>-->
-
-<!--          <el-col :span="12" style="padding: 12px 3px;"><div class="grid-content bg-purple">C相电压：{{v1List[index].v3}}V</div></el-col>-->
-<!--          <el-col :span="12" style="padding: 12px 3px;"><div class="grid-content bg-purple">C相电流：{{v1List[index].a3}}A</div></el-col>-->
-<!--          <el-col :span="12" style="padding: 12px 3px;"> <div class="grid-content bg-purple">瞬时流量：{{v1List[index].v8}}(m³/h)</div></el-col>-->
-<!--          <el-col :span="12" style="padding: 12px 3px;"><div class="grid-content bg-purple">累计流量：{{v1List[index].v9}}m³</div></el-col>-->
-<!--          <el-col :span="12" style="padding: 12px 3px;"><div class="grid-content bg-purple">总有功电能：{{v1List[index].kwh}}(kW/h)</div></el-col>-->
-        </div>
-      </div>
+<!--      <div style="float: right;">-->
+<!--        <el-date-picker-->
+<!--          v-if="showDate2"-->
+<!--          :key="'dp2-' + datePickerKey2"-->
+<!--          v-model="value2"-->
+<!--          type="daterange"-->
+<!--          align="right"-->
+<!--          size="mini"-->
+<!--          unlink-panels-->
+<!--          range-separator="至"-->
+<!--          start-placeholder="开始日期"-->
+<!--          end-placeholder="结束日期"-->
+<!--          value-format="yyyy-MM-dd"-->
+<!--          :picker-options="pickerOptions"-->
+<!--          @change="(val) => onDateChange(val, 2)"-->
+<!--          @blur="showDate2=false"-->
+<!--        >-->
+<!--        </el-date-picker>-->
+<!--      </div>-->
+<!--      <div style="float: right;">-->
+<!--        <el-radio-group v-model="radio2" size="mini" @change="updateChart(2)" class="pink-radio-group">-->
+<!--          <el-radio-button label="1" >日</el-radio-button>-->
+<!--          <el-radio-button label="2" >月</el-radio-button>-->
+<!--          <el-radio-button label="3" >年</el-radio-button>-->
+<!--        </el-radio-group>-->
+<!--      </div>-->
+<!--      <div id="c" style="height:100px;width:98%;float: left;" ref="c1"></div>-->
+<!--      <div id="c2" style="height:100px;width:98%;float: left;" ref="c2"></div>-->
     </div>
   </div>
 </template>
@@ -90,9 +110,8 @@
 import { getDict, getList, getQuery2, getQuery4, getStatDetail } from '@/api/point/point'
 import { getData } from '@/api/rain/rain'
 import vueSeamlessScroll from 'vue-seamless-scroll'
-import { getDeviceStatus } from '@/api/rain/device'
 export default {
-  name: 'rightBox',
+  name: 'LeftBox',
   data(){
 
     return{
@@ -111,7 +130,6 @@ export default {
       value2: [],
       options1:[],
       options2:[],
-      deviceStatusList:[],
       option: {
         step: 0.5,         // 滚动速度，值越小越慢
         limitMoveNum: 5,   // 数据条数小于这个数将不滚动
@@ -132,43 +150,7 @@ export default {
         disabledDate(time) {
           return time.getTime() > Date.now();
         }
-      },
-      img1:require('../../assets/u01_03.gif'),
-      img2:require('../../assets/u01_05.gif'),
-      img3:require('../../assets/u01_12.gif'),
-      img4:require('../../assets/u01_13.gif'),
-      img5:require('../../assets/u_qwj.png'),
-      img6:require('../../assets/u_pdj.png'),
-      obj:{
-        v4:1,
-        v5:4,
-        v6:12,
-        v7:2,
-        v8:4,
-        v9:1,
-      },
-      pointList:[],
-      index: 0,
-      siteId:null,
-      v1List:[{},{},{},{}],
-      url: require('../../assets/data_1.png'),
-      srcList: [
-        require('../../assets/data_1.png'),
-      ],
-      v3: {
-        a1:null,
-        a2:null,
-        a3:null,
-        v1:null,
-        v2:null,
-        v3:null,
-        kw:null,
-        kwh:null,
-        status:null,
-      },
-      timer2:null,
-      timeInfo: '',
-      dayInfo: '',
+      }
     }
   },
   mounted() {
@@ -188,27 +170,27 @@ export default {
       // this.listData2 = result;
       // console.error(this.listData2)
     });
-    // this.timer = setInterval(() => {
-    //   // if (this.showDate1){
-    //   //   this.showDate1  = false;
-    //   // }
-    //   // if (this.showDate2){
-    //   //   this.showDate2  = false;
-    //   // }
-    //   const xData = this.generateTime(1,10)
-    //   const result1 = []
-    //   const water1 = window.localStorage.getItem('water1')
-    //   const water2 = window.localStorage.getItem('water2')
-    //   for (let i = 0; i < xData.length; i++) {
-    //     result1.push({date:xData[i],title:" 外江水位:"+water1+"mm"})
-    //     result1.push({date:xData[i],title:" 内江水位:"+water2+"mm"})
-    //   }
-    //   // this.listData1  = result1;
-    //   this.listData1 = result1
-    //   this.scrollKey++  // 触发组件重新渲染
-    //   // console.error('xxxxxxxxxxxxx11111111111',result1)
-    // }, 6000)
-    // this.drawPipe();
+    this.timer = setInterval(() => {
+      // if (this.showDate1){
+      //   this.showDate1  = false;
+      // }
+      // if (this.showDate2){
+      //   this.showDate2  = false;
+      // }
+      const xData = this.generateTime(1,10)
+      const result1 = []
+      const water1 = window.localStorage.getItem('water1')
+      const water2 = window.localStorage.getItem('water2')
+      for (let i = 0; i < xData.length; i++) {
+        result1.push({date:xData[i],title:" 外江水位:"+water1+"mm"})
+        result1.push({date:xData[i],title:" 内江水位:"+water2+"mm"})
+      }
+      // this.listData1  = result1;
+      this.listData1 = result1
+      this.scrollKey++  // 触发组件重新渲染
+      // console.error('xxxxxxxxxxxxx11111111111',result1)
+    }, 6000)
+    this.drawPipe();
     // this.drawLine();
     // this.drawBar();
     getDict().then(response => {
@@ -254,44 +236,17 @@ export default {
       this.pipeData2=rs2;
       let rs = [{name:"泵站",value:count1},{name:"闸门",value:count2}];
       //console.error(rs);
-      // this.drawPipe(rs);
-      // this.drawPieRight('泵站');
+      this.drawPipe(rs);
+      this.drawPieRight('泵站');
     });
     // this.setDate(1);
     // this.getData(1);
     // this.getData(2);
-
-    getDeviceStatus().then(response => {
-      let data = response.data;
-      console.error(data)
-      this.deviceStatusList = data;
-      // let obj = data[0];
-      // this.v3.a1 = obj.a1;
-      // this.v3.a2 = obj.a2;
-      // this.v3.a3 = obj.a3;
-      // this.v3.v1 = obj.v1;
-      // this.v3.v2 = obj.v2;
-      // this.v3.v3 = obj.v3;
-      // this.v3.kw = obj.kw;
-      // this.v3.kwh = obj.kwh;
-      // this.v3.status = obj.status;
-      // this.timeInfo = obj.timeInfo;
-      // this.dayInfo = obj.dayInfo;
-      // console.error(this.v3)
-    })
   },
   beforeDestroy() {
     clearInterval(this.timer)
   },
   methods:{
-    checkData(type){
-      // console.error( type)
-      if (type === 1 || type === 2){
-        this.$router.push({path: '/rainWater', query: {type: type}});
-      } else {
-        this.$router.push({path: '/alarm', query: {type: type}});
-      }
-    },
     filterAndReplaceTitle(keyword, targetText, replacement = '') {
       return this.listData
         .filter(item => item.title.includes(keyword))
@@ -302,19 +257,19 @@ export default {
           }
         });
     },
-    // generateTime(type = 1, intervalMinutes = 5) {
-    //   const now = new Date();
-    //   let start, end;
-    //   start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0); // 今天 00:00
-    //   end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 55, 0); // 今天 00:00
-    //
-    //   const result = [];
-    //
-    //   for (let time = new Date(start); time <= end; time.setMinutes(time.getMinutes() + intervalMinutes)) {
-    //     result.push(this.formatDateTime(new Date(time)));
-    //   }
-    //   return result;
-    // },
+    generateTime(type = 1, intervalMinutes = 5) {
+      const now = new Date();
+      let start, end;
+      start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0); // 今天 00:00
+      end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 55, 0); // 今天 00:00
+
+      const result = [];
+
+      for (let time = new Date(start); time <= end; time.setMinutes(time.getMinutes() + intervalMinutes)) {
+        result.push(this.formatDateTime(new Date(time)));
+      }
+      return result;
+    },
     formatDateTime(date) {
       const pad = n => String(n).padStart(2, '0');
       return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ` +
@@ -883,7 +838,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-.rightBox{
+.leftBox{
   width: 22%;
   float: left;
   height: calc(100vh - 90px);
@@ -896,12 +851,6 @@ export default {
 .topBox{
   width: 100%;
   height: 28%;
-  float: left;
-  padding: 15px 15px;
-}
-.topBox{
-  width: 100%;
-  height: 32%;
   float: left;
   padding: 15px 15px;
 }
@@ -932,7 +881,7 @@ export default {
 }
 .rightImage{
   float: left;
-  width: 15%;
+  width: 30%;
   height: 50%;
   margin-top:3%;
   opacity: 0.5;
@@ -970,41 +919,5 @@ export default {
   background-color: #27DBE0;
   border-color: #27DBE0;
   color: white;
-}
-.contentBox{
-  width: 100%;
-  height: 90%;
-  float: left;
-  background-image: url("../../assets/u02_08.gif") ;
-  background-repeat:no-repeat;
-  background-size: 100% 100%;
-  margin-top: 2%;
-}
-.optionBox{
-  margin-top: 8%;
-  float: left;
-  margin-left: 10%;
-}
-.dateBox{
-  margin-top: 10px;
-  margin-right: 10px;
-  border: none;
-  background-color: #201F51;
-  color: #27DBE0;
-  float: left;
-  position: fixed;
-}
-.grid-content {
-  padding: 0 20px;
-  border-radius: 6px;
-  text-align: left;
-  color: #fff;
-}
-
-.bg-green {
-  background-color: #67C23A;
-}
-.bg-red {
-  background-color: #F56C6C;
 }
 </style>

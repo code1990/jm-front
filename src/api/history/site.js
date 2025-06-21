@@ -50,6 +50,7 @@ export function getSiteDay(query) {
     params: query
   })
 }
+
 export function getDict(siteType) {
   return request({
     url: '/tool/site/dict/'+siteType,

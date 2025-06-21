@@ -75,10 +75,11 @@ export function getQuery4(deviceId) {
     method: 'get'
   })
 }
-export function getStatDetail() {
+export function getStatDetail(query) {
   return request({
     url: '/tool/point/statDetail/',
-    method: 'get'
+    method: 'get',
+    params: query
   })
 }
 export function getStatCount() {
@@ -97,8 +98,14 @@ export function getLast() {
 
 export function getList() {
   return request({
-    url: '/tool/point/list3/',
+    url: '/tool/point/list/',
     method: 'get'
   })
 }
 
+export function getList3() {
+  return request({
+    url: '/tool/point/list3/',
+    method: 'get'
+  })
+}

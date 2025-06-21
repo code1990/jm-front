@@ -175,11 +175,11 @@
       <div class="searchBox" style="padding:20px 0px;background-color: white;width: 100%;height: 120px;border-bottom:1px solid #D6E7F7; ">
         <el-form :model="queryParams1" ref="queryForm" size="small" :inline="true" v-show="showSearch">
           <el-form-item label="监测要素" prop="deviceId"  style="margin-left: 20px;">
-            <el-checkbox-group v-model="checkList" @change="handleChange">
+            <el-checkbox-group v-model="checkList" @change="handleChange" style="width: 300px;">
               <el-checkbox label="1">耗能信息</el-checkbox>
-              <el-checkbox label="2">内河水位</el-checkbox>
-              <el-checkbox label="3">外河水位</el-checkbox>
-              <el-checkbox label="4">雨量信息</el-checkbox>
+              <el-checkbox label="2" v-show="false">内河水位</el-checkbox>
+              <el-checkbox label="3" v-show="false">外河水位</el-checkbox>
+              <el-checkbox label="4" v-show="false">雨量信息</el-checkbox>
               <el-checkbox label="5">开启时间</el-checkbox>
             </el-checkbox-group>
           </el-form-item>
@@ -196,6 +196,7 @@
           <el-form-item style="margin-left: 20px;">
             <el-button type="primary" icon="el-icon-search" size="small" style="float: left;margin-left: 20px;" @click="handleQuery1()">查询</el-button>
             <el-button  icon="el-icon-refresh" size="small" style="float: left;margin-left: 20px;" @click="resetQuery1()">重置</el-button>
+            <el-button  type="warning" icon="el-icon-download" size="small" style="float: left;margin-left: 20px;" @click="handleExport()">导出</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -206,6 +207,51 @@
         <div id="main4" v-show="check4" style="width: 100%;height: 200px;float: left;"></div>
         <div id="main5" v-show="check4" style="width: 100%;height: 200px;float: left;"></div>
         <div id="main6" v-show="check5" style="width: 100%;height: 200px;float: left;"></div>
+        <div id="main7"  style="width: 100%;height: 250px;float: left;padding: 10px;overflow-y: auto;">
+          <el-table
+            :data="tableData"
+            style="width: 100%">
+            <el-table-column
+              prop="date"
+              label="日期"
+              width="180">
+            </el-table-column>
+            <el-table-column
+              prop="deviceName"
+              label="设备名称"
+              width="180">
+            </el-table-column>
+            <el-table-column
+              prop="v1"
+              label="电流"
+              width="180">
+              <template slot-scope="scope">
+                {{ scope.row.v1 != null ? scope.row.v1.toFixed(2) : '' }}
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="v2"
+              label="电压">
+              <template slot-scope="scope">
+                {{ scope.row.v2 != null ? scope.row.v2.toFixed(2) : '' }}
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="v3"
+              label="总功率">
+              <template slot-scope="scope">
+                {{ scope.row.v3 != null ? scope.row.v3.toFixed(2) : '' }}
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="v4"
+              label="运行时长">
+              <template slot-scope="scope">
+                {{ scope.row.v4 != null ? scope.row.v4.toFixed(2) : '' }}
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
       </div>
     </div>
     <div  style="width: 100%;float: left;margin-left: 0px;background-color: white;margin-top: 20px;border-radius: 5px;"  v-loading="loading">
@@ -391,7 +437,7 @@ import LeftBox from '@/views/station/LeftBox.vue'
 import flvjs from "flv.js";
 import { getCameraBack, getCameraList, listAlarm, sendCommand } from '@/api/history/alarm'
 import { queryLast,getDict} from "@/api/station/station";
-import { getSiteDay} from "@/api/history/site";
+import { exportData, getSiteDay } from '@/api/history/site'
 import { getVideoDict } from '@/api/video/video'
 import VideoControl from '@/views/video/VideoControl.vue'
 import * as echarts from 'echarts'
@@ -437,6 +483,7 @@ export default {
       active:'2',
       radio: 0,
       alarmList:[],
+      tableData: [],
       stationList:[
         {
           "name": "水泵机1号",
@@ -494,9 +541,9 @@ export default {
       check0:0,
       checkType:1,
       check1:true,
-      check2:true,
-      check3:true,
-      check4:true,
+      check2:false,
+      check3:false,
+      check4:false,
       check5:true,
       isActive:true,
       isError:false,
@@ -517,7 +564,8 @@ export default {
       options2:[],
       videoList:[],
       videoList2:[],
-      deviceId:'',
+      deviceId:'3f79a090a42c4eb4a1779892a46fc5ca',
+      deviceName:'水泵机1号',
       videoId:'',
       queryParams1: {
         siteId: null,
@@ -584,12 +632,14 @@ export default {
       getDict(this.id+"").then(response=>{
         this.options1 = response.data;
         this.deviceId = response.data[0].value;
-        this.queryParams1.deviceId=response.data[0].value;
+        // this.deviceName = response.data[0].value;
+        // this.queryParams1.deviceId=response.data[0].value;
         //console.log(this.queryParams1)
         getSiteDay(this.queryParams1).then(response => {
           let obj = response.data;
           this.loading=true;
           this.drawRightChart(obj);
+          this.getTableData(obj);
           this.loading=false;
         });
       });
@@ -608,8 +658,11 @@ export default {
     this.queryStationList();
   },
   mounted() {
-    console.error('2025-05-23 15:30:00')
+    // console.error('2025-05-23 15:30:00')
     this.id = this.$route.params.id
+    // this.id = '3f79a090a42c4eb4a1779892a46fc5ca'
+    this.deviceId = '3f79a090a42c4eb4a1779892a46fc5ca'
+    // this.deviceName = '水泵机1号';
     // console.error(this.$route.params.id)
     // this.createFlv("videoElement1");
     // this.createFlv("videoElement2");
@@ -617,19 +670,20 @@ export default {
       let array = response.data;
       this.getDetailInfo(array);
     });
-    getDict(this.id+"").then(response=>{
+    getDict(this.$route.params.id+"").then(response=>{
       this.options1 = response.data;
-      this.deviceId = response.data[0].value;
-      this.queryParams1.deviceId=response.data[0].value;
-      //console.log(this.queryParams1)
-      getSiteDay(this.queryParams1).then(response => {
-        let obj = response.data;
-        this.drawRightChart(obj);
-      });
-      //this.queryParams1.siteType=null;
-      listAlarm(this.queryParams1).then(response => {
-        this.alarmList = response.rows;
-      });
+    });
+    // this.deviceId = response.data[0].value;
+    this.queryParams1.deviceId= '3f79a090a42c4eb4a1779892a46fc5ca';
+    //console.log(this.queryParams1)
+    getSiteDay(this.queryParams1).then(response => {
+      let obj = response.data;
+      this.drawRightChart(obj);
+      this.getTableData(obj);
+    });
+    //this.queryParams1.siteType=null;
+    listAlarm(this.queryParams1).then(response => {
+      this.alarmList = response.rows;
     });
     // getVideoDict(this.id+"","1").then(response => {
     //   this.options2 = response.data;
@@ -664,6 +718,38 @@ export default {
     //console.error(this.$route.params.id)
   },
   methods:{
+    handleExport(){
+      console.error(this.queryParams1)
+      this.download('/tool/site/day/data?time='+new Date().getTime(), {
+        ...this.queryParams1
+      }, `site_${new Date().getTime()}.xlsx`)
+    },
+    getTableData(data){
+      const result = [];
+      const dateArray = data.date;
+      const data1 = data.data[0];
+      const data2 = data.data[1];
+      const data3 = data.data[2];
+      const data4 = data.data[3];
+      const station = this.stationList.find(item => item.value === this.deviceId);
+      this.deviceName = station ? station.name : '设备';
+      const deviceName = this.deviceName
+      for (let i = 0; i < dateArray.length; i++) {
+        if (null == data1[i]){
+          continue
+        }
+        result.push({
+          date: dateArray[i],
+          deviceName: deviceName,
+          v1: data1[i],
+          v2: data2[i],
+          v3: data3[i],
+          v4: data4[i],
+        })
+      }
+      this.tableData = result;
+
+    },
     setValueName(data){
       console.error(data)
     },
@@ -764,11 +850,11 @@ export default {
     },
     drawRightChart(obj){
       this.drawChart(obj.data,obj.date);
-      this.drawChart2('main2','内河水位','内河水位(mm)',obj.data[4],obj.date,'#96D379');
-      this.drawChart2('main3','外河水位','外河水位(mm)',obj.data[5],obj.date,'#FBCF5A');
-      this.drawChart2('main4','雨量信息','瞬时雨量(mm)',obj.data[6],obj.date,'#5674CD');
-      this.drawChart2('main5','累计雨量','累计雨量(mm)',obj.data[7],obj.date,'#E62100');
-      this.drawChart2('main6','开启时间','开启时间(小时)',obj.data[3],obj.date,'#41B682');
+      // this.drawChart2('main2','内河水位','内河水位(mm)',obj.data[4],obj.date,'#96D379');
+      // this.drawChart2('main3','外河水位','外河水位(mm)',obj.data[5],obj.date,'#FBCF5A');
+      // this.drawChart2('main4','雨量信息','瞬时雨量(mm)',obj.data[6],obj.date,'#5674CD');
+      // this.drawChart2('main5','累计雨量','累计雨量(mm)',obj.data[7],obj.date,'#E62100');
+      this.drawChart2Bar('main6','开启时间','开启时间(小时)',obj.data[3],obj.date,'#41B682');
       // this.drawLineBar('main6',obj.data[3],obj.date);
     },
     handleChange(val){
@@ -814,7 +900,9 @@ export default {
       //console.error(this.queryParams1)
       getSiteDay(this.queryParams1).then(response => {
         let obj = response.data;
+        // console.error('getSiteDay',obj)
         this.drawRightChart(obj);
+        this.getTableData(obj)
       });
     },
     resetQuery2(){
@@ -986,6 +1074,50 @@ export default {
           },
         ]
       };
+      option && myChart.setOption(option);
+    },
+    drawChart2Bar(id,type,yTitle,array,date,color){
+      echarts.dispose(document.getElementById(id));
+      var chartDom = document.getElementById(id);
+      var myChart = echarts.init(chartDom);
+
+      const option = {
+        title: {
+          text: ''
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: [type]
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          top: '20%',
+          containLabel: true
+        },
+        color: [color],
+        xAxis: {
+          type: 'category',
+          boundaryGap: true, // 柱状图推荐设为 true
+          name: '天',
+          data: date
+        },
+        yAxis: {
+          type: 'value',
+          name: yTitle
+        },
+        series: [
+          {
+            name: type,
+            type: 'bar', // ✅ 改成柱状图
+            data: array,
+            barWidth: '50%' // ✅ 可选：设置柱宽
+          }
+        ]
+      }
       option && myChart.setOption(option);
     },
     getInfo(type,index){

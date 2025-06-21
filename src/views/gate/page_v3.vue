@@ -551,7 +551,7 @@ export default {
       this.drawChart2('main3','外河水位','外河水位(mm)',obj.data[5],obj.date,'#FBCF5A');
       this.drawChart2('main4','雨量信息','瞬时雨量(mm)',obj.data[6],obj.date,'#5674CD');
       this.drawChart2('main5','累计雨量','累计雨量(mm)',obj.data[7],obj.date,'#E62100');
-      this.drawChart2Bar('main6','开启时间','开启时间(小时)',obj.data[3],obj.date,'#41B682');
+      this.drawChart2('main6','开启时间','开启时间(小时)',obj.data[3],obj.date,'#41B682');
     },
     handleExport(){
       this.download('tool/rain/export', {
@@ -797,50 +797,6 @@ export default {
           },
         ]
       };
-      option && myChart.setOption(option);
-    },
-    drawChart2Bar(id,type,yTitle,array,date,color){
-      echarts.dispose(document.getElementById(id));
-      var chartDom = document.getElementById(id);
-      var myChart = echarts.init(chartDom);
-
-      const option = {
-        title: {
-          text: ''
-        },
-        tooltip: {
-          trigger: 'axis'
-        },
-        legend: {
-          data: [type]
-        },
-        grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
-          top: '20%',
-          containLabel: true
-        },
-        color: [color],
-        xAxis: {
-          type: 'category',
-          boundaryGap: true, // 柱状图推荐设为 true
-          name: '天',
-          data: date
-        },
-        yAxis: {
-          type: 'value',
-          name: yTitle
-        },
-        series: [
-          {
-            name: type,
-            type: 'bar', // ✅ 改成柱状图
-            data: array,
-            barWidth: '50%' // ✅ 可选：设置柱宽
-          }
-        ]
-      }
       option && myChart.setOption(option);
     },
     getInfo(val){

@@ -3,106 +3,111 @@
     <div class="topBox">
       <div class="titleBox">
         <img :src="image1" class="leftImage">
-        <div class="titleInfo">年度闸开启统计</div>
-        <img :src="image2" class="rightImage">
+        <div class="titleInfo">开启信息统计</div>
+        <img :src="image2" class="rightImage" >
+        <el-button size="mini" @click="dialogVisible = true" class="dateBox" style="background-color: #1F1F51;" v-if="false">时间</el-button>
+        <el-button size="mini" @click="checkData(2)" class="dateBox" style="background-color:#212052;">详情</el-button>
         <div class="titleTip"></div>
+        <el-dialog
+          title="提示"
+          :visible.sync="dialogVisible"
+          width="30%"
+          :before-close="handleClose">
+          <el-date-picker
+            v-model="valueDate"
+            type="daterange"
+            :picker-options="pickerOptions"
+            format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            size="mini">
+          </el-date-picker>
+          <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="getNewData()">确 定</el-button>
+        </span>
+        </el-dialog>
+
       </div>
-      <div id="a" style="height:200px;width:49%;float: left;margin-top: 20px" ref="a"></div>
-      <div id="aa" style="height:200px;width:49%;float: left;margin-top: 20px" ref="aa"></div>
+      <div id="a" style="height:200px;width:60%;float: left;margin-top: 20px" ref="a"></div>
+      <div id="aa" style="height:200px;width:38%;float: left;margin-top: 20px" ref="aa"></div>
     </div>
     <div class="midBox">
       <div class="titleBox">
         <img :src="image1" class="leftImage">
-        <div class="titleInfo" style="font-size: 16px;">水位监测实时信息</div>
-        <img :src="image2" class="rightImage">
+        <div class="titleInfo" style="font-size: 16px;">水利设备信息</div>
+        <img :src="image2" class="rightImage" >
+        <el-button size="mini" @click="checkData(1)" class="dateBox" style="background-color:#020B44;">详情</el-button>
         <el-button size="mini" @click="checkDate(1)" class="dateBox" v-if="false">请选择时间</el-button>
         <div class="titleTip"></div>
       </div>
-      <div style="height: 23vh;float: left;overflow-y: auto;width: 100%;margin-top: 10px;">
-        <vue-seamless-scroll :data="listData1" class="scroll-box" :class-option="option" :key="scrollKey">
-          <ul class="custom-list" style="margin-left: -20px;">
-            <li v-for="(item, index) in listData1" :key="index" style="color:white;">
-              <span class="date" v-text="item.date"></span>
-              <span class="title" v-text="item.title"></span>
-            </li>
-          </ul>
-        </vue-seamless-scroll>
+      <div style="float: left;width: 100%;height: 100%;">
+        <div class="infoBox1">
+          <img :src="img1" class="imgTip">
+          <el-col :span="18" class="tip1">管辖区域</el-col>
+          <el-col :span="12" class="tip2">{{obj.v4}}(km2)</el-col>
+        </div>
+        <div class="infoBox1">
+          <img :src="img2" class="imgTip">
+          <el-col :span="18" class="tip1">泵站数量</el-col>
+          <el-col :span="12" class="tip2">{{obj.v5}}(个)</el-col>
+        </div>
+        <div class="infoBox1">
+          <img :src="img3" class="imgTip">
+          <el-col :span="18" class="tip1">拦河闸数量</el-col>
+          <el-col :span="12" class="tip2">{{obj.v6}}(个)</el-col>
+        </div>
+        <div class="infoBox1">
+          <img :src="img4" class="imgTip">
+          <el-col :span="18" class="tip1">测流点数量</el-col>
+          <el-col :span="12" class="tip2">{{obj.v7}}(个)</el-col>
+        </div>
+        <div class="infoBox1">
+          <img :src="img5" class="imgTip">
+          <el-col :span="18" class="tip1">清污机数量</el-col>
+          <el-col :span="12" class="tip2">{{obj.v8}}(个)</el-col>
+        </div>
+        <div class="infoBox1">
+          <img :src="img6" class="imgTip">
+          <el-col :span="18" class="tip1">皮带机数量</el-col>
+          <el-col :span="12" class="tip2">{{obj.v9}}(个)</el-col>
+        </div>
       </div>
-<!--      <div style="float: right;z-index: 99">-->
-<!--        <el-date-picker-->
-<!--          v-if="showDate1"-->
-<!--          :key="'dp1-' + datePickerKey1"-->
-<!--          v-model="value1"-->
-<!--          type="daterange"-->
-<!--          align="right"-->
-<!--          size="mini"-->
-<!--          unlink-panels-->
-<!--          range-separator="至"-->
-<!--          start-placeholder="开始日期"-->
-<!--          end-placeholder="结束日期"-->
-<!--          value-format="yyyy-MM-dd"-->
-<!--          :picker-options="pickerOptions"-->
-<!--          @change="(val) => onDateChange(val, 1)"-->
-<!--          @blur="showDate1=false"-->
-<!--        >-->
-<!--        </el-date-picker>-->
-<!--      </div>-->
-<!--      <div style="float: right;">-->
-<!--        <el-radio-group v-model="radio1" size="mini" @change="updateChart(1)" class="pink-radio-group">-->
-<!--          <el-radio-button label="1" >日</el-radio-button>-->
-<!--          <el-radio-button label="2" >月</el-radio-button>-->
-<!--          <el-radio-button label="3" >年</el-radio-button>-->
-<!--        </el-radio-group>-->
-<!--      </div>-->
-<!--      <div id="b" style="height:100px;width:98%;float: left;" ref="b1"></div>-->
-<!--      <div id="b2" style="height:100px;width:98%;float: left;" ref="b2"></div>-->
     </div>
     <div class="bottomBox">
       <div class="titleBox">
         <img :src="image1" class="leftImage">
-        <div class="titleInfo" style="font-size: 16px;">雨量监测实时信息</div>
+        <div class="titleInfo" style="font-size: 16px;">泵站功耗信息</div>
         <img :src="image2" class="rightImage">
+        <el-button size="mini" @click="checkData(2)" class="dateBox" style="background-color:#020B44;">详情</el-button>
         <el-button size="mini" @click="checkDate(2)" class="dateBox" v-if="false">请选择时间</el-button>
         <div class="titleTip"></div>
       </div>
-      <div style="height: 28vh;float: left;overflow-y: auto;width: 100%;margin-top: 10px;">
-        <vue-seamless-scroll :data="listData2" class="scroll-box" :class-option="option">
-          <ul class="custom-list" style="margin-left: -20px;">
-            <li v-for="(item, index) in listData2" :key="index" style="color:white;">
-              <span class="date" v-text="item.date"></span>
-              <span class="title" v-text="item.title"></span>
-            </li>
-          </ul>
-        </vue-seamless-scroll>
+      <div  class="contentBox" >
+        <div class="optionBox">
+          <el-radio-group v-model="index">
+            <el-radio :label="0" style="color: white;">泵1</el-radio>
+            <el-radio :label="1" style="color: white;" >泵2</el-radio>
+            <el-radio :label="2" style="color: white;" >泵3</el-radio>
+            <el-radio :label="3" style="color: white;" >泵4</el-radio>
+          </el-radio-group>
+        </div>
+        <div class="detailBox">
+          <el-col :span="12" style="padding: 5px 3px;"><div class="grid-content bg-purple">A相电压：{{v1List[index].v1}}V</div></el-col>
+          <el-col :span="12" style="padding: 5px 3px;"><div class="grid-content bg-purple">A相电流：{{v1List[index].a1}}A</div></el-col>
+
+          <el-col :span="12" style="padding: 5px 3px;"><div class="grid-content bg-purple">B相电压：{{v1List[index].v1}}V</div></el-col>
+          <el-col :span="12" style="padding: 5px 3px;"><div class="grid-content bg-purple">B相电流：{{v1List[index].a2}}A</div></el-col>
+
+          <el-col :span="12" style="padding: 8px 3px;"><div class="grid-content bg-purple">C相电压：{{v1List[index].v3}}V</div></el-col>
+          <el-col :span="12" style="padding: 8px 3px;"><div class="grid-content bg-purple">C相电流：{{v1List[index].a3}}A</div></el-col>
+          <el-col :span="12" style="padding: 8px 3px;"> <div class="grid-content bg-purple">瞬时流量：{{v1List[index].v8}}(m³/h)</div></el-col>
+          <el-col :span="12" style="padding: 8px 3px;"><div class="grid-content bg-purple">累计流量：{{v1List[index].v9}}m³</div></el-col>
+          <el-col :span="12" style="padding: 8px 3px;"><div class="grid-content bg-purple">总有功电能：{{v1List[index].kwh}}(kW/h)</div></el-col>
+        </div>
       </div>
-<!--      <div style="float: right;">-->
-<!--        <el-date-picker-->
-<!--          v-if="showDate2"-->
-<!--          :key="'dp2-' + datePickerKey2"-->
-<!--          v-model="value2"-->
-<!--          type="daterange"-->
-<!--          align="right"-->
-<!--          size="mini"-->
-<!--          unlink-panels-->
-<!--          range-separator="至"-->
-<!--          start-placeholder="开始日期"-->
-<!--          end-placeholder="结束日期"-->
-<!--          value-format="yyyy-MM-dd"-->
-<!--          :picker-options="pickerOptions"-->
-<!--          @change="(val) => onDateChange(val, 2)"-->
-<!--          @blur="showDate2=false"-->
-<!--        >-->
-<!--        </el-date-picker>-->
-<!--      </div>-->
-<!--      <div style="float: right;">-->
-<!--        <el-radio-group v-model="radio2" size="mini" @change="updateChart(2)" class="pink-radio-group">-->
-<!--          <el-radio-button label="1" >日</el-radio-button>-->
-<!--          <el-radio-button label="2" >月</el-radio-button>-->
-<!--          <el-radio-button label="3" >年</el-radio-button>-->
-<!--        </el-radio-group>-->
-<!--      </div>-->
-<!--      <div id="c" style="height:100px;width:98%;float: left;" ref="c1"></div>-->
-<!--      <div id="c2" style="height:100px;width:98%;float: left;" ref="c2"></div>-->
     </div>
   </div>
 </template>
@@ -110,6 +115,7 @@
 import { getDict, getList, getQuery2, getQuery4, getStatDetail } from '@/api/point/point'
 import { getData } from '@/api/rain/rain'
 import vueSeamlessScroll from 'vue-seamless-scroll'
+import { queryLast, queryStation } from '@/api/station/station'
 export default {
   name: 'LeftBox',
   data(){
@@ -117,19 +123,41 @@ export default {
     return{
       image1:require('../../assets/u0_13.gif'),
       image2:require('../../assets/u0_15.gif'),
+      img1:require('../../assets/u01_03.gif'),
+      img2:require('../../assets/u01_05.gif'),
+      img3:require('../../assets/u01_12.gif'),
+      img4:require('../../assets/u01_13.gif'),
+      img5:require('../../assets/u_qwj.png'),
+      img6:require('../../assets/u_pdj.png'),
       options: [],
+      index: 0,
       radio1: '2',
       radio2: '2',
       showDate1:false,
       showDate2:false,
       datePickerKey1: 0,
       datePickerKey2: 0,
+      valueDate: [],
+      pickerOpened: false,
+      dialogVisible: false,
       scrollKey: 0,
       timer: null,
       value1: [],
       value2: [],
       options1:[],
       options2:[],
+      v1List:[{},{},{},{}],
+      isOpen: false,
+      myChart1: null,
+      myChart2: null,
+      obj:{
+        v4:1,
+        v5:4,
+        v6:12,
+        v7:2,
+        v8:4,
+        v9:1,
+      },
       option: {
         step: 0.5,         // 滚动速度，值越小越慢
         limitMoveNum: 5,   // 数据条数小于这个数将不滚动
@@ -144,6 +172,7 @@ export default {
       listData2: [],
       pipeData1:[],
       pipeData2:[],
+      pipeData3:[],
       optionData:[],
       pickerOptions: {
         // 可选配置，例如禁用未来日期
@@ -154,6 +183,9 @@ export default {
     }
   },
   mounted() {
+    //this.hideDatePicker();
+    this.initChart();
+    this.loadChart();
     getList().then(response => {
       this.listData = response.data;
       this.listData1 = this.filterAndReplaceTitle('水位计', '马梪站');
@@ -215,29 +247,52 @@ export default {
       //   this.drawYearBar(this.$refs.c,lastData,currentData);
       // });
     });
-    getStatDetail().then(response => {
+    getStatDetail(null).then(response => {
       let data = response.data;
       let count1 = 0;
       let count2 = 0;
+      let count3 = 0;
       let rs1 = [];
       let rs2 = [];
+      let rs3 = [];
       for(let i=0;i<data.length;i++){
         let obj = data[i];
         //console.log(obj);
         if (obj.type === 1){
           count1+=obj.value;
           rs1.push(obj)
-        }else {
+        }else if(obj.type === 3){
+          count3+=obj.value;
+          rs3.push(obj)
+        } else {
           count2+=obj.value;
           rs2.push(obj)
         }
       }
       this.pipeData1=rs1;
       this.pipeData2=rs2;
-      let rs = [{name:"泵站",value:count1},{name:"闸门",value:count2}];
+      this.pipeData3=rs3;
+      let rs = [{name:"泵站",value:count1},{name:"闸门",value:count2},{name:"清污机",value:count3}];
       //console.error(rs);
       this.drawPipe(rs);
       this.drawPieRight('泵站');
+    });
+
+    queryStation().then(response => {
+      let array = response.data;
+      let siteId = array[0].id;
+      for(let i= 0;i<array.length;i++){
+        let obj = { value: array[i].id, label: array[i].name};
+        array[i]=obj;
+      }
+      this.siteId = siteId;
+      // console.log(array)
+      this.options=array;
+      this.value1 = siteId;
+      queryLast(this.siteId+"").then(response => {
+        let array = response.data;
+        this.getDetailInfo(array);
+      });
     });
     // this.setDate(1);
     // this.getData(1);
@@ -247,6 +302,96 @@ export default {
     clearInterval(this.timer)
   },
   methods:{
+    initChart() {
+      this.myChart1 = this.$echarts.init(this.$refs.a);
+      this.myChart2 = this.$echarts.init(this.$refs.aa);
+    },
+    disposeChart() {
+      this.myChart1.dispose();
+      this.myChart2.dispose();
+    },
+    loadChart(){
+      let query ={}
+      if (this.valueDate.length>0){
+        query ={
+          startTime:this.valueDate[0],
+          endTime:this.valueDate[1]
+        }
+      }
+      let that = this;
+      getStatDetail(query).then(response => {
+        let data = response.data;
+        let count1 = 0;
+        let count2 = 0;
+        let count3 = 0;
+        let rs1 = [];
+        let rs2 = [];
+        for(let i=0;i<data.length;i++){
+          let obj = data[i];
+          //console.log(obj);
+          if (obj.type === 1){
+            count1+=obj.value;
+            rs1.push(obj)
+          }else {
+            count2+=obj.value;
+            rs2.push(obj)
+          }
+          if (obj.name.includes('清污机')){
+            count3+=obj.value;
+          }
+        }
+        that.pipeData1=rs1;
+        that.pipeData2=rs2;
+        let rs = [{name:"泵站",value:count1},{name:"闸门",value:count2},{name:"清污机",value:count3}];
+        //console.error(rs);
+        that.disposeChart();
+        that.initChart();
+        that.drawPipe(rs);
+        that.drawPieRight('泵站');
+      });
+    },
+    getNewData(){
+      this.dialogVisible = false;
+      console.error('xxxxx',this.valueDate)
+      this.loadChart();
+    },
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {});
+    },
+    checkData(type){
+      if (type === 2){
+        return this.$router.push('/station/59513090d3fb43c5b62a963dd5189f7c');
+      }else {
+        return this.$router.push('/device');
+      }
+    },
+    getDetailInfo(array){
+      for(let i=0;i<array.length;i++){
+        let obj = array[i];
+        let name = obj.deviceName;
+        if (name.indexOf('1号电机') !== -1){
+          //this.v1List[0] = obj;
+          this.$set(this.v1List, 0, obj);
+        }
+        if (name.indexOf('2号电机') !== -1){
+          //this.v1List[1] = obj;
+          this.$set(this.v1List, 1, obj);
+        }
+        if (name.indexOf('3号电机') !== -1){
+          //this.v1List[2] = obj;
+          this.$set(this.v1List, 2, obj);
+        }
+        if (name.indexOf('4号电机') !== -1){
+          //this.v1List[3] = obj;
+          this.$set(this.v1List, 3, obj);
+        }
+      }
+      this.index=0;
+    },
     filterAndReplaceTitle(keyword, targetText, replacement = '') {
       return this.listData
         .filter(item => item.title.includes(keyword))
@@ -609,7 +754,7 @@ export default {
       myChart.setOption(option);
     },
     drawPipe(statData){
-      let myChart = this.$echarts.init(this.$refs.a);
+      // let myChart = this.$echarts.init(this.$refs.a);
       // var myChart = echarts.init(chartDom);
 
       const optionData = this.optionData;
@@ -619,10 +764,10 @@ export default {
         },
         legend: {
           top: '0%',
-          left: '3%',
-          //orient: 'vertical',
+          left: '0%',
+          orient: 'horizontal',
           textStyle:{
-            fontSize: 14,//字体大小
+            fontSize: 12,//字体大小
             color: '#33AEC7'//字体颜色
           },
           // formatter(params) {
@@ -661,25 +806,68 @@ export default {
             },
             data: statData
           }
+        ],
+        graphic: [
+          {
+            type: 'text',
+            left: '50%',
+            top: '30%',
+            z: 99999,
+            style: {
+              text: '水泵4台',
+              textAlign: 'center',
+              fill: '#27DBEC',
+              fontSize: 12,
+              fontWeight: 'normal'
+            }
+          },
+          {
+            type: 'text',
+            left: '15%',
+            top: '40%',
+            z: 99999,
+            style: {
+              text: '清污机4台',
+              textAlign: 'center',
+              fill: '#27DBEC',
+              fontSize: 12,
+              fontWeight: 'bold'
+            }
+          },
+          {
+            type: 'text',
+            left: '50%',
+            bottom: '30%',
+            z: 99999,
+            style: {
+              text: '闸门12台',
+              textAlign: 'center',
+              fill: '#27DBEC',
+              fontSize: 12,
+              fontWeight: 'bold'
+            }
+          }
         ]
       };
 
-      myChart.setOption(option);
+      this.myChart1.setOption(option);
       let _this = this
-      myChart.on('click', params => {
+      this.myChart1.on('click', params => {
         _this.drawPieRight(params.name)
       })
     },
     drawPieRight(name){
-      let myChart = this.$echarts.init(this.$refs.aa);
+      // let myChart = this.$echarts.init(this.$refs.aa);
       // var myChart = echarts.init(chartDom);
       let statData = this.pipeData1;
       if (name === '闸门'){
         statData = this.pipeData2;
+      }else if (name === '清污机'){
+        statData = this.pipeData3
       }
       let option = {
         title: {
-          text: name+'年度开启分布明细',
+          text: name+'年度开启统计',
           textStyle: {
             fontSize: 14,
             fontWeight:100,
@@ -721,7 +909,7 @@ export default {
           }
         ]
       };
-      myChart.setOption(option);
+      this.myChart2.setOption(option);
     },
     drawLine3(obj,xData,yData,title,unit,color){
       let myChart = this.$echarts.init(obj);
@@ -881,7 +1069,7 @@ export default {
 }
 .rightImage{
   float: left;
-  width: 30%;
+  width: 10%;
   height: 50%;
   margin-top:3%;
   opacity: 0.5;
@@ -907,7 +1095,7 @@ export default {
   margin-top: 10px;
   margin-left: 10px;
   border: none;
-  background-color: #040C35;
+  background-color: #1F1F51;
   color: #27DBE0;
 }
 .pink-radio-group ::v-deep .el-radio-button__inner {
@@ -919,5 +1107,60 @@ export default {
   background-color: #27DBE0;
   border-color: #27DBE0;
   color: white;
+}
+.dateBox{
+  margin-top: 10px;
+  margin-right: 10px;
+  border: none;
+  background-color: #030C49;
+  color: #27DBE0;
+  float: left;
+  position: fixed;
+}
+.infoBox1{
+  float: left;
+  width: 44%;
+  height: 30%;
+  background:repeating-linear-gradient(to right,#1B257B,#000940,#010969);
+  padding: 15px 15px;
+  margin-left: 4%;
+  margin-right: 2%;
+  margin-top: 2%;
+  color: white;
+}
+.imgTip{
+  margin-top: -2%;
+  float: left;
+  width: 50px;
+  height: 50px;
+}
+.tip1{
+  float: right;
+  margin-right: -23%;
+}
+.tip2{
+  font-size: 16px;
+  text-align: center;
+  margin-top:2%;
+}
+.contentBox{
+  width: 100%;
+  height: 105%;
+  float: left;
+  background-image: url("../../assets/u02_08.gif") ;
+  background-repeat:no-repeat;
+  background-size: 100% 100%;
+  margin-top: 2%;
+}
+.optionBox{
+  margin-top: 8%;
+  float: left;
+  margin-left: 10%;
+}
+.detailBox{
+  float: left;
+  color: white;
+  margin-left: 8%;
+  margin-top: 5%;
 }
 </style>
